@@ -1,0 +1,37 @@
+# ขั้นตอนการอัปเดต Repository ใน Proxmox VE
+
+## เลือก Node ที่ต้องการ
+
+ก่อนที่เราจะอัปเดต Proxmox VE เราต้องเปลี่ยน Repository ที่ใช้เสียก่อน เนื่องจากเวอร์ชัน Enterprise จะต้องมีการสมัครสมาชิก
+
+- ไปที่แถบนำทางด้านซ้ายมือในหน้าเว็บจัดการ Proxmox VE
+
+- เลือก **Node** ที่คุณต้องการอัปเดต เช่น **`pve1`**
+
+- จากนั้นไปที่เมนู **`Updates`** \> **`Repositories`**
+
+- คลิกที่บรรทัดของ **Enterprise Repository** (มักจะอยู่ในกรอบสีแดง) แล้วเลือก **`Disable`**
+
+![proxmox-repository-1](/assets/proxmox/proxmox-repository-1.png)
+
+- หลังจาก **`Disable`** Repository Enterprise เสร็จแล้ว ให้คลิกที่ปุ่ม **`Add`** บริเวณ **`APT Repositories`**
+
+![proxmox-repository-2](/assets/proxmox/proxmox-repository-2.png)
+
+- ในหน้าต่าง **Add APT Repository** ที่ปรากฏขึ้น ให้เลือก Repository ที่ชื่อว่า **`No-Subscription`** (หรือ `Proxmox VE No-Subscription`)
+
+- คลิกปุ่ม **`Add`** เพื่อเพิ่ม Repository
+
+![proxmox-repository-3](/assets/proxmox/proxmox-repository-3.png)
+
+## อัปเดตแพ็คเกจ
+
+- คลิกปุ่ม `Shell` เพื่อเปิดหน้า console ขึ้นมา
+
+![proxmox-repository-4](/assets/proxmox/proxmox-repository-4.png)
+
+- จากนั้นพิมพ์คำสั่งด้านล่างเพื่ออัปเดตแพ็คเกจ
+
+```bash
+apt update && apt upgrade -y
+```

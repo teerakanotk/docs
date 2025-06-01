@@ -1,0 +1,34 @@
+# ขั้นตอนการติดตั้ง Technitium DNS บน Ubuntu 22.04 LTS
+
+## อัปเดต Repository
+
+```bash
+sudo apt update && sudo apt upgrade -y
+```
+
+## ติดตั้ง Technitium DNS
+
+ใช้สคริปต์การติดตั้งอย่างเป็นทางการจาก Technitium เพื่อดำเนินการติดตั้ง Technitium DNS Server
+
+```bash
+curl -sSL https://download.technitium.com/dns/install.sh | sudo bash
+```
+
+> **คำอธิบาย:**
+>
+> - `curl -sSL https://download.technitium.com/dns/install.sh`: ดาวน์โหลดสคริปต์การติดตั้งจาก URL ที่กำหนด
+> - `| sudo bash`: ส่งผลลัพธ์ของสคริปต์ที่ดาวน์โหลดมาไปยัง `bash` เพื่อเรียกใช้งานด้วยสิทธิ์ผู้ดูแลระบบ (`sudo`)
+
+รอจนกว่ากระบวนการติดตั้งจะเสร็จสมบูรณ์ ซึ่งอาจใช้เวลาสักครู่ขึ้นอยู่กับความเร็วอินเทอร์เน็ตและประสิทธิภาพของระบบ
+
+## เข้าสู่หน้าเว็บจัดการ Technitium DNS
+
+เปิดเว็บบราวเซอร์แล้วพิมพ์ URL ต่อไปนี้:
+
+```
+http://<ip_address>:5380
+```
+
+![technitium-setup-1](/assets/technitium/technitium-setup-1.png)
+
+> **ตัวอย่าง:** หาก IP Address ของเซิร์ฟเวอร์ของคุณคือ `192.168.1.100` ให้พิมพ์ `http://192.168.1.100:5380` ในเว็บบราวเซอร์ของคุณ
