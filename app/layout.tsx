@@ -16,7 +16,11 @@ const navbar = (
 );
 const footer = <Footer>© {new Date().getFullYear()} Document Project</Footer>;
 
-export default async function RootLayout({ children }: any) {
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en" dir="ltr" suppressHydrationWarning>
       <Head />
