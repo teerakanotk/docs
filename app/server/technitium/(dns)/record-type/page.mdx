@@ -1,0 +1,33 @@
+import { Callout } from 'nextra/components'
+
+# ประเภทของ DNS Record
+
+### A (IPv4 Address Record)
+
+- ชี้ชื่อโดเมนไปยัง IPv4 Address
+
+### AAAA (IPv6 Address Record)
+
+- ชี้ชื่อโดเมนไปยัง IPv6 Address
+
+### CNAME (Canonical Name Record)
+
+- ชี้ชื่อโดเมนหนึ่งไปยังอีกชื่อโดเมนหนึ่ง (alias)
+
+### MX (Mail Exchange Record)
+
+- ระบุ Mail Server สำหรับรับอีเมลของโดเมน
+
+### NS (Name Server Record)
+
+- ระบุว่าใครเป็น DNS Server ที่ดูแลโดเมนนั้น
+
+### SOA (Start of Authority Record)
+
+- ระบุข้อมูลต้นทางของ DNS Zone เช่น admin, serial number, refresh time
+
+- มีเพียง 1 รายการ ต่อ zone
+
+### PTR (Pointer Record)
+
+- ใช้สำหรับ Reverse DNS lookup (IP -\> ชื่อโดเมน)

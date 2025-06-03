@@ -1,0 +1,87 @@
+---
+title: "Get Started"
+---
+
+import { Callout } from "nextra/components";
+
+# ขั้นตอนการติดตั้ง Proxmox VE 7.4
+
+## เริ่มต้นการติดตั้ง Proxmox VE
+
+หลังจากสร้าง Bootable USB ของ Proxmox VE และบูตเครื่องแล้วจะพบหน้าจอเริ่มต้นการติดตั้ง
+
+- เลือก **`Install Proxmox VE`**
+- กดปุ่ม **`Enter`** เพื่อดำเนินการต่อ
+
+![proxmox-setup-1](/assets/proxmox/proxmox-setup-1.png)
+
+## ยอมรับข้อตกลงการใช้งาน
+
+อ่านข้อตกลงการใช้งาน (End-User License Agreement) เพื่อทำความเข้าใจเงื่อนไขการใช้งาน
+
+- คลิกปุ่ม **`I agree`** เพื่อยอมรับข้อตกลงและไปยังขั้นตอนถัดไป
+
+![proxmox-setup-2](/assets/proxmox/proxmox-setup-2.png)
+
+## เลือก Storage สำหรับการติดตั้ง
+
+- เลือกดิสก์ที่ต้องการ
+
+- คลิกปุ่ม **`Next`** เพื่อดำเนินการต่อ
+
+![proxmox-setup-3](/assets/proxmox/proxmox-setup-3.png)
+
+## กำหนด Time Zone
+
+ตั้งค่าเขตเวลา (Time zone) และประเทศที่เหมาะสมกับตำแหน่งที่ตั้งของคุณ เพื่อให้เวลาของระบบถูกต้อง
+
+- Country: `Thailand`
+
+- Time Zone: ระบบจะเลือก Time zone จากช่อง `Country` (เช่น Asia/Bangkok)
+
+- Keyboard Layout: `U.S. English`
+
+- คลิกปุ่ม **`Next`**
+
+![proxmox-setup-4](/assets/proxmox/proxmox-setup-4.png)
+
+## กำหนดรหัสผ่านและอีเมลผู้ดูแลระบบ
+
+ตั้งค่ารหัสผ่านสำหรับบัญชีผู้ดูแลระบบ (root) และระบุอีเมล
+
+- **Password**: กรอกรหัสผ่านที่คุณต้องการใช้สำหรับบัญชีผู้ดูแลระบบ (root)
+- **Confirm Password**: กรอกรหัสผ่านซ้ำอีกครั้งเพื่อยืนยัน
+- **Email**: กรอกอีเมลสำหรับแจ้งเตือนหรือการกู้คืน
+
+<Callout>
+  หากไม่ต้องการใส่อีเมลส่วนตัว: สามารถระบุเป็น `mail@example.local`
+</Callout>
+
+![proxmox-setup-5](/assets/proxmox/proxmox-setup-5.png)
+
+## กำหนดค่าเครือข่าย
+
+- **Hostname:** กำหนดชื่อโฮสต์สำหรับเซิร์ฟเวอร์ของคุณ
+- **IP Address:** ระบุ IP Address
+- **Netmask:** ระบุ Subnet Mask ของเครือข่าย
+- **Gateway:** ระบุ IP Address ของ Gateway
+- **DNS Server:** ระบุ IP Address ของ DNS Server
+
+![proxmox-setup-6](/assets/proxmox/proxmox-setup-6.png)
+
+## ตรวจสอบและเริ่มการติดตั้ง
+
+- เมื่อแน่ใจว่าข้อมูลทั้งหมดถูกต้องแล้ว คลิกปุ่ม **`Install`** เพื่อเริ่มกระบวนการติดตั้ง Proxmox VE
+- รอจนกว่ากระบวนการติดตั้งจะเสร็จสมบูรณ์ ซึ่งอาจใช้เวลาหลายนาทีขึ้นอยู่กับประสิทธิภาพของฮาร์ดแวร์
+
+![proxmox-setup-7](/assets/proxmox/proxmox-setup-7.png)
+
+## เข้าสู่ระบบครั้งแรก
+
+- เปิดเว็บบราวเซอร์ของคุณ แล้วพิมพ์ IP Address ที่แสดงบนหน้าคอนโซล ตามด้วยพอร์ต 8006
+
+```txt copy
+https://<ip_address>:8006
+```
+
+- เข้าสู่ระบบด้วยบัญชีผู้ใช้ `root` และรหัสผ่านที่คุณตั้งไว้

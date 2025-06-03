@@ -1,0 +1,63 @@
+---
+title: "Repository"
+---
+
+import { Callout } from "nextra/components";
+
+# ขั้นตอนการอัปเดต Proxmox VE (สำหรับ No-Subscription)
+
+## เปลี่ยน Repository
+
+โดยค่าเริ่มต้น ระบบจะเปิดใช้งาน Enterprise Repository ไว้ หากไม่มี Subscription จะต้องปิดการใช้งาน Enterprise Repository และเปิดใช้งาน No-Subscription Repository
+
+<Callout type="warning">
+  หากไม่ปิดใช้งาน Enterprise Repository จะไม่สามารถอัปเดต Repository ได้
+</Callout>
+
+- เข้าสู่หน้า Web UI ของ Proxmox VE
+
+```txt copy
+http://<ip_address>:8006
+```
+
+- ที่แถบนำทางด้านซ้ายมือ, เลือก node ที่ต้องการอัปเดต (เช่น `pve1`)
+
+- ไปที่เมนู `Updates` > `Repositories`
+
+- เลือกบรรทัดของ `pve-enterprise` repository แล้วคลิกปุ่ม `Disable`
+
+![proxmox-repository-1](/assets/proxmox/proxmox-repository-1.png)
+
+- จากนั้นคลิก `Add` บริเวณ `APT Repositories`
+
+![proxmox-repository-2](/assets/proxmox/proxmox-repository-2.png)
+
+- เลือก `No-Subscription` แล้วคลิกปุ่ม `Add`
+
+![proxmox-repository-3](/assets/proxmox/proxmox-repository-3.png)
+
+## อัปเดตแพ็คเกจ
+
+- ไปที่เมนู `Updates`
+
+- คลิกปุ่ม `Refresh`
+
+![proxmox-repository-4](/assets/proxmox/proxmox-repository-4.png)
+
+- รอจนกระทั่งกระบวนการเสร็จสมบูรณ์และแสดงข้อความ `Task OK`
+
+![proxmox-repository-5](/assets/proxmox/proxmox-repository-5.png)
+
+- กดปุ่ม `Esc` เพื่อปิดหน้าต่างแสดงผล
+
+## อัปเกรดระบบ
+
+- หลังจาก Refresh แล้ว, คลิกปุ่ม `Upgrade`
+
+![proxmox-repository-6](/assets/proxmox/proxmox-repository-6.png)
+
+- จะมีหน้าต่างป๊อปอัพเด้งขึ้นมา แสดงรายการแพ็คเกจที่ได้รับการอัปเดต จากนั้นกดปุ่ม `Y` แล้วกดปุ่ม `Enter` เพื่อยืนยัน
+
+![proxmox-repository-7](/assets/proxmox/proxmox-repository-7.png)
+
+- รอจนกว่ากระบวนการอัปเกรดจะเสร็จสมบูรณ์ (ระยะเวลาที่ใช้ขึ้นอยู่กับประสิทธิภาพของเครื่องและความเร็วอินเทอร์เน็ต)

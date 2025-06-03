@@ -6,12 +6,16 @@ import "nextra-theme-docs/style.css";
 export const metadata = {
   // Define your metadata here
   // For more information on metadata API, see: https://nextjs.org/docs/app/building-your-application/optimizing/metadata
+  title: {
+    default: "Document",
+    template: "%s | Document",
+  },
 };
 
 const navbar = (
   <Navbar
     logo={<b>Document</b>}
-    projectLink={"https://github.com/teerakanotk/ctsurin"}
+    projectLink={"https://github.com/teerakanotk/docs"}
   />
 );
 const footer = <Footer>© {new Date().getFullYear()} Document Project</Footer>;
@@ -28,7 +32,7 @@ export default async function RootLayout({
         <Layout
           navbar={navbar}
           pageMap={await getPageMap()}
-          docsRepositoryBase="https://github.com/teerakanotk/ctsurin/tree/main/docs"
+          docsRepositoryBase="https://github.com/teerakanotk/docs/tree/main"
           footer={footer}
           search={false}
           sidebar={{ autoCollapse: true }}

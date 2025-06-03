@@ -1,11 +1,15 @@
 export default {
-  index: {
-    title: "Setup",
+  index: "",
+  dns: {
+    title: "DNS",
   },
   "add-record": {
     title: "Add Record",
   },
-  record: {
+  "record-type": {
     title: "Record Type",
+  },
+  dhcp: {
+    title: "DHCP",
   },
 };
