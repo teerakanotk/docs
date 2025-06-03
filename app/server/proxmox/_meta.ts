@@ -1,4 +1,8 @@
 export default {
-  index: "",
-  repository: "",
+  index: {
+    title: "Get Started",
+  },
+  repository: {
+    title: "Repository",
+  },
 };

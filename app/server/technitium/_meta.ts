@@ -1,5 +1,7 @@
 export default {
-  index: "",
+  index: {
+    title: "Get Started",
+  },
   dns: {
     title: "DNS",
   },
