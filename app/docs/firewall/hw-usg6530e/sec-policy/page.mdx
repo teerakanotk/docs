@@ -1,0 +1,88 @@
+import { Steps, Callout } from 'nextra/components'
+
+# Security Policy
+
+นโยบายความปลอดภัยหรือเงื่อนไขที่กำหนดขึ้นเพื่อควบคุมทราฟฟิกที่ผ่านไฟร์วอลล์ โดยระบุว่า “ใคร” (ผู้ใช้หรือระบบ) สามารถเข้าถึง “อะไร” (ทรัพยากรหรือบริการ) ได้ “เมื่อไร” และ “อย่างไร” ทั้งนี้เพื่อป้องกันการเข้าถึงโดยไม่ได้รับอนุญาต และลดความเสี่ยงจากภัยคุกคามทางไซเบอร์
+
+<Steps>
+
+### เปิดเว็บบราวเซอร์ และล็อกอินเข้าสู่ระบบ
+
+```url copy
+https://<ip_address>:8443
+```
+
+### ไปที่เมนู `Policy` > `Security Policy`
+
+### คลิกปุ่ม `Add Security Policy`
+
+### General Settings
+
+- Name: `ชื่อ (สูงสุด 32 ตัวอักษร)`
+- Description: `คำอธิบาย`
+- Policy Group: `กลุ่มของนโยบาย`
+- Tag: `ป้ายกำกับ`
+
+### Source and Destination
+
+- Source Zone: `โซนต้นทาง (local, trust, dmz, untrust)`
+- Destination Zone: `โซนปลายทาง (local, trust, dmz, untrust)`
+- Source Address: `IP Address ของต้นทาง`
+- Destination Address: `IP Address ของปลายทาง`
+- VLAN ID: `VLAN ที่เกี่ยวข้อง`
+
+### User and Service
+
+- User: `ชื่อผู้ใช้`
+- Access Mode: `วิธีการเข้าถึง`
+- Device: `อุปกรณ์`
+- Service: `พอร์ตหรือโปรโตคอลที่อนุญาต เช่น TCP/80 (HTTP), TCP/443 (HTTPS)`
+- Application: `ระบุแอปพลิเคชันหรือกลุ่มแอป เช่น Email, Social Media`
+- URL Category: `หมวดหมู่ของเว็บไซต์ เช่น Business, Gambling, Adult`
+- Schedule: `กำหนดช่วงเวลาที่นโยบายจะทำงาน เช่น วันทำงาน 09:00–17:00`
+
+### Action
+
+- Permit: `อนุญาต`
+- Deny: `ปฏิเสธ`
+
+### Content Security
+
+- Antivirus: `ตรวจจับและป้องกันไวรัส`
+- Intrusion Prevention: `ตรวจจับ/ป้องกันการบุกรุก (IPS)`
+- URL Filtering: `กรอง URL ที่ไม่เหมาะสม`
+- File Blocking: `บล็อกไฟล์ตามประเภท เช่น .exe, .bat`
+- Data Filtering: `ป้องกันข้อมูลสำคัญรั่วไหล เช่น หมายเลขบัตรประชาชน`
+- Application Behavior Control: `ควบคุมพฤติกรรมของแอปพลิเคชัน`
+- Cloud Access Security Awareness: `ควบคุมการเข้าถึง Cloud Service`
+- Email Filtering: `ตรวจสอบและกรองอีเมล`
+- APT Defense: `ป้องกันภัยคุกคามแบบ Advanced Persistent Threats`
+- DNS Filtering: `กรอง DNS เพื่อบล็อกเว็บไซต์อันตราย`
+
+### Other Options
+
+- Record Traffic Logs: `เปิดการบันทึก Log`
+
+</Steps>
+
+![security-policy-1](/images/firewall/security-policy-1.png)
+
+![security-policy-2](/images/firewall/security-policy-2.png)
+
+## Example
+
+ต้องการอนุญาตให้ client สามารถ ping ไปยัง 8.8.8.8 (Google Public DNS) ที่เครือข่ายภายนอกได้
+
+- Name: `client_icmp_untrust`
+- Source Zone: `trust`
+- Destination Zone: `untrust`
+- Source Address: `192.168.0.0/24`
+- Destination Address: `8.8.8.8/32`
+- Service: `icmp`
+- Action: `Permit`
+
+![security-policy-3](/images/firewall/security-policy-3.png)
+
+<Callout>
+ทดลอง ping จาก client ไปยัง 8.8.8.8 หากมีการตอบกลับมาแสดงว่าถูกต้อง
+</Callout>

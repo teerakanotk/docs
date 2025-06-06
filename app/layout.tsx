@@ -7,14 +7,13 @@ export const metadata = {
   // Define your metadata here
   // For more information on metadata API, see: https://nextjs.org/docs/app/building-your-application/optimizing/metadata
   title: {
-    default: "Document",
-    template: "%s | Document",
+    template: "%s | CTS Documents",
   },
 };
 
 const navbar = (
   <Navbar
-    logo={<b>Document</b>}
+    logo={<b>CTS Documents</b>}
     projectLink={"https://github.com/teerakanotk/docs"}
   />
 );

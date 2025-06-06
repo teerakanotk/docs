@@ -1,0 +1,98 @@
+---
+title: "Setup"
+---
+
+import { Steps, Callout } from "nextra/components";
+
+# DNS Server
+
+DNS Server (Domain Name System Server) เปรียบเสมือน "สมุดโทรศัพท์" หรือ "ผู้แปลภาษา" ของอินเทอร์เน็ต มันมีหน้าที่หลักในการแปลงชื่อเว็บไซต์ที่เราจดจำง่าย (เช่น `www.google.com`) ให้เป็นที่อยู่ IP Address (เช่น 172.217.160.142) ซึ่งเป็นชุดตัวเลขที่คอมพิวเตอร์และอุปกรณ์เครือข่ายใช้ในการระบุตำแหน่งและสื่อสารกัน
+
+## ขั้นตอนการตั้งค่า Technitium ให้ทำหน้าที่ DNS Server
+
+<Steps>
+
+### เข้าสู่หน้าเว็บจัดการ Technitium DNS
+
+```url copy
+http://<ip_address>:5380
+```
+
+### General Settings
+
+- ไปที่เมนู `Settings` > `General`
+
+  - DNS Server Domain: ระบุชื่อโดเมนหลักของ DNS Server (FQDN) เช่น `ns1.example.com`
+
+  ![technitium-dns-1](/images/technitium/technitium-dns-1.png)
+
+- เลื่อนลงมาที่หัวข้อ `Zone Defaults`
+
+  - เลือก ☑️ ที่ช่อง `Use SOA Serial Date Scheme`
+
+  ![technitium-dns-2](/images/technitium/technitium-dns-2.png)
+
+- เมื่อตั้งค่าเสร็จแล้ว เลื่อนลงมาที่ล่างสุด แล้วคลิกปุ่ม `Save Settings`
+
+<Callout type="default">
+  การใช้ **SOA Serial Date Scheme** ช่วยให้รู้ว่า Zone File
+  มีการแก้ไขครั้งล่าสุดเมื่อวันที่เท่าไหร่ เพียงแค่ดูจากตัวเลข Serial Number
+</Callout>
+
+### Forwarders
+
+ช่วยให้ DNS Server ของสามารถสอบถามชื่อโดเมนที่ไม่รู้จักจาก DNS Server ภายนอกได้
+
+- ไปที่เมนู `Settings` > `Proxy & Forwarders`
+
+- ในหัวข้อ `Forwarders`
+
+  - เพิ่ม IP Address ของ DNS Server ภายนอกที่ต้องการใช้งาน
+
+    ![technitium-dns-5](/images/technitium/technitium-dns-5.png)
+
+- เมื่อตั้งค่าเสร็จแล้ว เลื่อนลงมาที่ล่างสุด แล้วคลิกปุ่ม `Save Settings` เพื่อบันทึกการเปลี่ยนแปลง
+
+</Steps>
+
+## ตั้งค่า Zone
+
+![technitium-dns-6](/images/technitium/technitium-dns-6.png)
+
+### Forward Zone
+
+Forward Zone ใช้ในการจับคู่ชื่อโดเมนกับ IP Address (เช่น `www.example.com` ไปยัง 192.168.1.10)
+
+- ไปที่เมนู `Zones`
+
+- คลิกปุ่ม `Add Zone`
+
+  - Zone: ชื่อโดเมนที่ต้องการ
+  - Type: `Primary Zone`
+  - Zone Serial: เลือก ☑️ Use SOA Serial Date Scheme
+
+- จากนั้นคลิกปุ่ม `Add`
+
+![technitium-dns-7](/images/technitium/technitium-dns-7.png)
+
+- เสร็จสิ้นขั้นตอนการสร้าง Forward zone `example.com`
+
+![technitium-dns-8](/images/technitium/technitium-dns-8.png)
+
+### Reverse Zone
+
+ใช้สำหรับการค้นหาชื่อโดเมนจาก IP Address (Reverse DNS Lookup หรือ PTR Record) (เช่น 192.168.1.10 ไปยัง server1.yourdomain.local)
+
+- คลิกปุ่ม `Add Zone` อีกครั้ง
+
+  - Zone: `IPv4/CIDR`
+  - Type: `Primary Zone`
+  - Zone Serial: ติ๊กเครื่องหมาย ☑️ ที่ช่อง
+
+- คลิกปุ่ม `Add`
+
+![technitium-dns-9](/images/technitium/technitium-dns-9.png)
+
+- เสร็จสิ้นขั้นตอนการสร้าง Reverse zone สำหรับเน็ตเวิร์ค `192.168.0.0/24`
+
+![technitium-dns-10](/images/technitium/technitium-dns-10.png)

@@ -1,0 +1,92 @@
+---
+title: "DHCP"
+---
+
+import { Steps, Callout } from "nextra/components";
+
+# DHCP Server
+
+DHCP Server คือ เซิร์ฟเวอร์ที่ทำหน้าที่แจกจ่าย IP Address และข้อมูลการตั้งค่าเครือข่ายที่จำเป็นอื่นๆ (เช่น Subnet Mask, Default Gateway, DNS Server) ให้กับอุปกรณ์ต่างๆ (คอมพิวเตอร์, มือถือ, แท็บเล็ต ฯลฯ) ที่เชื่อมต่อเข้ากับเครือข่ายโดยอัตโนมัติ
+
+## หลักการทำงาน (แบบง่ายๆ)
+
+- **อุปกรณ์ร้องขอ (Discover):** เมื่ออุปกรณ์เชื่อมต่อเครือข่าย จะส่งสัญญาณขอ IP Address
+- **เซิร์ฟเวอร์เสนอ (Offer):** DHCP Server ที่อยู่บนเครือข่ายจะเสนอ IP Address ที่ว่างอยู่ให้
+- **อุปกรณ์ยืนยัน (Request):** อุปกรณ์จะเลือก IP ที่ได้รับและยืนยันกลับไป
+- **เซิร์ฟเวอร์อนุมัติ (Acknowledge):** DHCP Server จะอนุมัติ IP Address นั้นให้กับอุปกรณ์อย่างเป็นทางการ
+  หลังจากนั้นอุปกรณ์ของคุณก็พร้อมใช้งานอินเทอร์เน็ตได้ทันที โดยไม่ต้องตั้งค่าอะไรเองเลย
+
+## ขั้นตอนการตั้งค่า DHCP Server บน Technitium
+
+<Steps>
+
+### เข้าสู่หน้า Web UI ของ Technitium
+
+- เปิดเว็บเบราว์เซอร์แล้วเข้าสู่หน้าเว็บจัดการ Technitium DNS โดยใช้ IP Address และ Port ที่ได้ตั้งค่าไว้
+
+```text copy
+http://<ip_address>:5380
+```
+
+### ไปที่เมนู DHCP > Scopes
+
+![technitium-dhcp-1](/images/technitium/technitium-dhcp-1.png)
+
+### สร้าง DHCP Scopes
+
+- คลิกปุ่ม Add Scopes
+
+- กรอกข้อมูลที่จำเป็นดังต่อไปนี้:
+  - **Name:** ตั้งชื่อสำหรับ DHCP Scope นี้ (เช่น `vlan100`)
+  - **Starting Address:** IP Address ตัวแรกใน Pool ที่จะเริ่มแจกจ่าย (เช่น `192.168.100.3`)
+  - **Ending Address:** IP Address ตัวสุดท้ายใน Pool ที่แจกจ่าย (เช่น `192.168.103.254`)
+  - **Subnet Mask:** ระบุ Subnet Mask ของเครือข่าย (เช่น `255.255.252.0`)
+  - **Lease Time (Optional):** กำหนดระยะเวลาที่ IP Address จะหมดอายุ
+
+  ![technitium-dhcp-2](/images/technitium/technitium-dhcp-2.png)
+
+  - **Domain Name (Optional):** ระบุชื่อโดเมนสำหรับเครือข่ายของคุณ (เช่น `ctsurin.local`)
+
+  ![technitium-dhcp-3](/images/technitium/technitium-dhcp-3.png)
+
+  - **Router Address:** ระบุ IP Address ของ Router หรือ Gateway ของเครือข่ายคุณ (เช่น `192.168.100.2`)
+  - **DNS Servers:** ระบุ IP Address ของ DNS Server ที่อุปกรณ์ Client จะได้รับ
+  - **WINS Servers (Optional):** หากมี WINS Server ในเครือข่าย
+
+  ![technitium-dhcp-4](/images/technitium/technitium-dhcp-4.png)
+
+- เมื่อกรอกข้อมูลครบถ้วน ให้คลิกปุ่ม `Save`
+
+### เปิดใช้งาน DHCP Scope
+
+หลังจากบันทึก Scope แล้ว คุณจะเห็น Scope ที่สร้างขึ้นในรายการ
+
+- ตรวจสอบให้แน่ใจว่าช่อง Enabled (หรือสถานะเปิด/ปิด) สำหรับ Scope ที่คุณสร้างถูก เปิดใช้งาน
+
+![technitium-dhcp-5](/images/technitium/technitium-dhcp-5.png)
+
+### กำหนดค่าสวิตช์ให้ทำ DHCP Relay มายังเซิร์ฟเวอร์
+
+- ตัวอย่าง Huawei Switch S5731-H:
+
+```text
+<SW> system-view
+[SW] interface vlanif <1-4094>
+[SW] ip address <ip_address> <subnet_mask>
+[SW] dhcp select relay
+[SW] dhcp relay server-ip <dhcp_server_address>
+```
+
+> - dhcp_server_address => ที่อยู่ไอพีของเครื่องเซิร์ฟเวอร์ที่ให้บริการ DHCP
+
+![technitium-dhcp-6](/images/technitium/technitium-dhcp-6.png)
+
+### ทดสอบการทำงานของ DHCP Server
+
+- ปิด/เปิดอุปกรณ์ Client
+
+- ตรวจสอบ IP Address
+
+![technitium-dhcp-7](/images/technitium/technitium-dhcp-7.png)
+
+</Steps>

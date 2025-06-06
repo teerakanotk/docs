@@ -1,11 +1,10 @@
 export default {
   index: {
-    title: "Introduction",
+    type: "page",
+    display: "hidden",
   },
-  network: {
-    title: "Network",
-  },
-  server: {
-    title: "Server",
+  docs: {
+    type: "page",
+    title: "Documentation",
   },
 };
