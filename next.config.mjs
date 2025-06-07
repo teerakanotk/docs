@@ -1,13 +1,14 @@
 import nextra from "nextra";
 
 const withNextra = nextra({
-  search: false,
+  search: { codeblocks: false },
+  contentDirBasePath: "/docs",
 });
 
-export default withNextra({
+const nextConfig = {
   eslint: {
-    // Warning: This allows production builds to successfully complete even if
-    // your project has ESLint errors.
     ignoreDuringBuilds: true,
   },
-});
+};
+
+export default withNextra(nextConfig);

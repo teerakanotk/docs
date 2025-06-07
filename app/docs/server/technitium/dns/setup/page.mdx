@@ -24,13 +24,13 @@ http://<ip_address>:5380
 
   - DNS Server Domain: ระบุชื่อโดเมนหลักของ DNS Server (FQDN) เช่น `ns1.example.com`
 
-  ![technitium-dns-1](/images/technitium/technitium-dns-1.png)
+  ![technitium-dns-1](/server/technitium/technitium-dns-1.png)
 
 - เลื่อนลงมาที่หัวข้อ `Zone Defaults`
 
   - เลือก ☑️ ที่ช่อง `Use SOA Serial Date Scheme`
 
-  ![technitium-dns-2](/images/technitium/technitium-dns-2.png)
+  ![technitium-dns-2](/server/technitium/technitium-dns-2.png)
 
 - เมื่อตั้งค่าเสร็จแล้ว เลื่อนลงมาที่ล่างสุด แล้วคลิกปุ่ม `Save Settings`
 
@@ -49,7 +49,7 @@ http://<ip_address>:5380
 
   - เพิ่ม IP Address ของ DNS Server ภายนอกที่ต้องการใช้งาน
 
-    ![technitium-dns-5](/images/technitium/technitium-dns-5.png)
+    ![technitium-dns-3](/server/technitium/technitium-dns-3.png)
 
 - เมื่อตั้งค่าเสร็จแล้ว เลื่อนลงมาที่ล่างสุด แล้วคลิกปุ่ม `Save Settings` เพื่อบันทึกการเปลี่ยนแปลง
 
@@ -57,7 +57,7 @@ http://<ip_address>:5380
 
 ## ตั้งค่า Zone
 
-![technitium-dns-6](/images/technitium/technitium-dns-6.png)
+![technitium-dns-4](/server/technitium/technitium-dns-4.png)
 
 ### Forward Zone
 
@@ -73,13 +73,13 @@ Forward Zone ใช้ในการจับคู่ชื่อโดเม�
 
 - จากนั้นคลิกปุ่ม `Add`
 
-![technitium-dns-7](/images/technitium/technitium-dns-7.png)
+![technitium-dns-5](/server/technitium/technitium-dns-5.png)
+
+![technitium-dns-6](/server/technitium/technitium-dns-6.png)
 
 - เสร็จสิ้นขั้นตอนการสร้าง Forward zone `example.com`
 
-![technitium-dns-8](/images/technitium/technitium-dns-8.png)
-
-### Reverse Zone
+### Reverse Zone (Optional)
 
 ใช้สำหรับการค้นหาชื่อโดเมนจาก IP Address (Reverse DNS Lookup หรือ PTR Record) (เช่น 192.168.1.10 ไปยัง server1.yourdomain.local)
 
@@ -91,8 +91,8 @@ Forward Zone ใช้ในการจับคู่ชื่อโดเม�
 
 - คลิกปุ่ม `Add`
 
-![technitium-dns-9](/images/technitium/technitium-dns-9.png)
+![technitium-dns-7](/server/technitium/technitium-dns-7.png)
+
+![technitium-dns-8](/server/technitium/technitium-dns-8.png)
 
 - เสร็จสิ้นขั้นตอนการสร้าง Reverse zone สำหรับเน็ตเวิร์ค `192.168.0.0/24`
-
-![technitium-dns-10](/images/technitium/technitium-dns-10.png)

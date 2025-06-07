@@ -1,0 +1,58 @@
+import { Steps } from 'nextra/components';
+
+# DHCP Relay
+
+DHCP Relay คือฟังก์ชันที่ช่วยให้อุปกรณ์เครือข่าย (เช่น Router หรือ Switch Layer 3) สามารถส่งต่อ (Relay) คำขอ DHCP ระหว่างอุปกรณ์ Client และ DHCP Server ที่อยู่คนละเครือข่าย (Subnet) กันได้
+
+<Steps>
+### เข้าสู่ระบบอุปกรณ์ผ่าน SSH
+
+เปิดโปรแกรม SSH Client (เช่น PuTTY, Terminal) แล้วเชื่อมต่อไปยังอุปกรณ์ของคุณ:
+
+```bash
+ssh <user>@<ip_address>
+```
+
+- แทนที่ `<user>` ด้วยชื่อผู้ใช้สำหรับเข้าสู่ระบบอุปกรณ์
+- แทนที่ `<ip_address>` ด้วย IP Address ของอุปกรณ์ที่คุณต้องการตั้งค่า
+
+### เข้าสู่โหมด Privilege Level
+
+หลังจากล็อกอินสำเร็จ ให้เข้าสู่โหมดการตั้งค่าที่มีสิทธิ์สูงสุด (Privilege Level) เพื่อเริ่มการคอนฟิก:
+
+```bash copy
+system-view
+```
+
+### เปิดใช้งาน DHCP แบบ Global
+
+```bash copy
+dhcp enable
+```
+
+### เข้าสู่การตั้งค่า Interface (VLAN)
+
+ระบุ Interface ที่อุปกรณ์ Client อยู่ และต้องการให้ทำหน้าที่เป็น DHCP Relay Interface นี้มักจะเป็น VLAN Interface สำหรับเครือข่ายย่อยนั้นๆ:
+
+```bash copy
+interface vlan <1-4094>
+```
+
+- แทนที่ `<1-4094>` ด้วยหมายเลข VLAN ID ที่ต้องการ
+
+### กำหนด Interface ให้เป็น DHCP Relay
+
+```bash copy
+dhcp select relay
+```
+
+### ผูก DHCP Server เข้ากับ Interface
+
+ระบุ IP Address ของ DHCP Server ที่ DHCP Relay จะส่งต่อคำขอไปหา:
+
+```bash copy
+dhcp relay server-ip <dhcp_server_address>
+```
+</Steps>
+
+หลังจากตั้งค่าทั้งหมดแล้ว อุปกรณ์ที่อยู่ใน VLAN นั้นๆ ควรจะสามารถรับ IP Address จาก DHCP Server ได้

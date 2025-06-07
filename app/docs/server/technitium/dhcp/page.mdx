@@ -8,7 +8,7 @@ import { Steps, Callout } from "nextra/components";
 
 DHCP Server คือ เซิร์ฟเวอร์ที่ทำหน้าที่แจกจ่าย IP Address และข้อมูลการตั้งค่าเครือข่ายที่จำเป็นอื่นๆ (เช่น Subnet Mask, Default Gateway, DNS Server) ให้กับอุปกรณ์ต่างๆ (คอมพิวเตอร์, มือถือ, แท็บเล็ต ฯลฯ) ที่เชื่อมต่อเข้ากับเครือข่ายโดยอัตโนมัติ
 
-## หลักการทำงาน (แบบง่ายๆ)
+## หลักการทำงาน
 
 - **อุปกรณ์ร้องขอ (Discover):** เมื่ออุปกรณ์เชื่อมต่อเครือข่าย จะส่งสัญญาณขอ IP Address
 - **เซิร์ฟเวอร์เสนอ (Offer):** DHCP Server ที่อยู่บนเครือข่ายจะเสนอ IP Address ที่ว่างอยู่ให้
@@ -30,7 +30,7 @@ http://<ip_address>:5380
 
 ### ไปที่เมนู DHCP > Scopes
 
-![technitium-dhcp-1](/images/technitium/technitium-dhcp-1.png)
+![technitium-dhcp-1](/server/technitium/technitium-dhcp-1.png)
 
 ### สร้าง DHCP Scopes
 
@@ -43,17 +43,17 @@ http://<ip_address>:5380
   - **Subnet Mask:** ระบุ Subnet Mask ของเครือข่าย (เช่น `255.255.252.0`)
   - **Lease Time (Optional):** กำหนดระยะเวลาที่ IP Address จะหมดอายุ
 
-  ![technitium-dhcp-2](/images/technitium/technitium-dhcp-2.png)
+  ![technitium-dhcp-2](/server/technitium/technitium-dhcp-2.png)
 
   - **Domain Name (Optional):** ระบุชื่อโดเมนสำหรับเครือข่ายของคุณ (เช่น `ctsurin.local`)
 
-  ![technitium-dhcp-3](/images/technitium/technitium-dhcp-3.png)
+  ![technitium-dhcp-3](/server/technitium/technitium-dhcp-3.png)
 
   - **Router Address:** ระบุ IP Address ของ Router หรือ Gateway ของเครือข่ายคุณ (เช่น `192.168.100.2`)
   - **DNS Servers:** ระบุ IP Address ของ DNS Server ที่อุปกรณ์ Client จะได้รับ
   - **WINS Servers (Optional):** หากมี WINS Server ในเครือข่าย
 
-  ![technitium-dhcp-4](/images/technitium/technitium-dhcp-4.png)
+  ![technitium-dhcp-4](/server/technitium/technitium-dhcp-4.png)
 
 - เมื่อกรอกข้อมูลครบถ้วน ให้คลิกปุ่ม `Save`
 
@@ -63,7 +63,7 @@ http://<ip_address>:5380
 
 - ตรวจสอบให้แน่ใจว่าช่อง Enabled (หรือสถานะเปิด/ปิด) สำหรับ Scope ที่คุณสร้างถูก เปิดใช้งาน
 
-![technitium-dhcp-5](/images/technitium/technitium-dhcp-5.png)
+![technitium-dhcp-5](/server/technitium/technitium-dhcp-5.png)
 
 ### กำหนดค่าสวิตช์ให้ทำ DHCP Relay มายังเซิร์ฟเวอร์
 
@@ -79,7 +79,7 @@ http://<ip_address>:5380
 
 > - dhcp_server_address => ที่อยู่ไอพีของเครื่องเซิร์ฟเวอร์ที่ให้บริการ DHCP
 
-![technitium-dhcp-6](/images/technitium/technitium-dhcp-6.png)
+![technitium-dhcp-6](/server/technitium/technitium-dhcp-6.png)
 
 ### ทดสอบการทำงานของ DHCP Server
 
@@ -87,6 +87,6 @@ http://<ip_address>:5380
 
 - ตรวจสอบ IP Address
 
-![technitium-dhcp-7](/images/technitium/technitium-dhcp-7.png)
+![technitium-dhcp-7](/server/technitium/technitium-dhcp-7.png)
 
 </Steps>
