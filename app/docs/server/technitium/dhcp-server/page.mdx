@@ -1,5 +1,5 @@
 ---
-title: "DHCP"
+title: "DHCP Server"
 ---
 
 import { Steps, Callout } from "nextra/components";
@@ -30,46 +30,45 @@ http://<ip_address>:5380
 
 ### ไปที่เมนู DHCP > Scopes
 
+- ลบค่าเริ่มต้นทั้งหมดออกให้หมด
+
 ![technitium-dhcp-1](/server/technitium/technitium-dhcp-1.png)
 
 ### สร้าง DHCP Scopes
 
-- คลิกปุ่ม Add Scopes
+- คลิกปุ่ม `Add Scopes`
 
 - กรอกข้อมูลที่จำเป็นดังต่อไปนี้:
-  - **Name:** ตั้งชื่อสำหรับ DHCP Scope นี้ (เช่น `vlan100`)
-  - **Starting Address:** IP Address ตัวแรกใน Pool ที่จะเริ่มแจกจ่าย (เช่น `192.168.100.3`)
-  - **Ending Address:** IP Address ตัวสุดท้ายใน Pool ที่แจกจ่าย (เช่น `192.168.103.254`)
-  - **Subnet Mask:** ระบุ Subnet Mask ของเครือข่าย (เช่น `255.255.252.0`)
+  - **Name:** ตั้งชื่อสำหรับ DHCP Scope นี้ (เช่น `vlan10`)
+  - **Starting Address:** IP Address ตัวแรกใน Pool ที่จะเริ่มแจกจ่าย (เช่น `10.11.10.3`)
+  - **Ending Address:** IP Address ตัวสุดท้ายใน Pool ที่แจกจ่าย (เช่น `10.11.10.254`)
+  - **Subnet Mask:** ระบุ Subnet Mask ของเครือข่าย (เช่น `255.255.255.0`)
   - **Lease Time (Optional):** กำหนดระยะเวลาที่ IP Address จะหมดอายุ
 
   ![technitium-dhcp-2](/server/technitium/technitium-dhcp-2.png)
 
-  - **Domain Name (Optional):** ระบุชื่อโดเมนสำหรับเครือข่ายของคุณ (เช่น `ctsurin.local`)
+  - **Domain Name (Optional):** ระบุชื่อโดเมนสำหรับเครือข่ายของคุณ (เช่น `example.com`)
 
   ![technitium-dhcp-3](/server/technitium/technitium-dhcp-3.png)
 
-  - **Router Address:** ระบุ IP Address ของ Router หรือ Gateway ของเครือข่ายคุณ (เช่น `192.168.100.2`)
-  - **DNS Servers:** ระบุ IP Address ของ DNS Server ที่อุปกรณ์ Client จะได้รับ
-  - **WINS Servers (Optional):** หากมี WINS Server ในเครือข่าย
+  - **Router Address:** ระบุ Default Gateway ของเครือข่ายคุณ (เช่น `10.11.10.2`)
+  - **DNS Servers:** ระบุ IP Address ของ DNS Server
 
   ![technitium-dhcp-4](/server/technitium/technitium-dhcp-4.png)
 
-- เมื่อกรอกข้อมูลครบถ้วน ให้คลิกปุ่ม `Save`
+- คลิกปุ่ม `Save`
 
 ### เปิดใช้งาน DHCP Scope
 
-หลังจากบันทึก Scope แล้ว คุณจะเห็น Scope ที่สร้างขึ้นในรายการ
+หลังจากบันทึกเรียบร้อย คุณจะเห็น Scope ที่สร้างขึ้นในรายการ
 
-- ตรวจสอบให้แน่ใจว่าช่อง Enabled (หรือสถานะเปิด/ปิด) สำหรับ Scope ที่คุณสร้างถูก เปิดใช้งาน
+- ตรวจสอบให้แน่ใจว่าช่อง Status (ปุ่มสีเหลือง) มีสถานะเป็น `Disable`
 
 ![technitium-dhcp-5](/server/technitium/technitium-dhcp-5.png)
 
 ### กำหนดค่าสวิตช์ให้ทำ DHCP Relay มายังเซิร์ฟเวอร์
 
-- ตัวอย่าง Huawei Switch S5731-H:
-
-```text
+```
 <SW> system-view
 [SW] interface vlanif <1-4094>
 [SW] ip address <ip_address> <subnet_mask>
@@ -77,16 +76,44 @@ http://<ip_address>:5380
 [SW] dhcp relay server-ip <dhcp_server_address>
 ```
 
-> - dhcp_server_address => ที่อยู่ไอพีของเครื่องเซิร์ฟเวอร์ที่ให้บริการ DHCP
+ตัวอย่าง:
 
-![technitium-dhcp-6](/server/technitium/technitium-dhcp-6.png)
+```
+#
+ interface Vlanif10
+ ip address 10.11.10.2 255.255.255.0
+ dhcp select relay
+ dhcp relay server-ip 10.11.254.150
+#
+```
 
-### ทดสอบการทำงานของ DHCP Server
+> คำสั่งด้านบนเป็นของอุปกรณ์ `Huawei Switch S5731-H`
 
-- ปิด/เปิดอุปกรณ์ Client
+</Steps>
 
-- ตรวจสอบ IP Address
+## ทดสอบการทำงานของ DHCP Server
 
-![technitium-dhcp-7](/server/technitium/technitium-dhcp-7.png)
+### สำหรับ Windows
+
+<Steps>
+
+#### เปิด Command Prompt และพิมพ์คำสั่ง
+
+```cmd
+ipconfig /renew
+```
+
+> คำสั่ง `ipconfig /renew` ใช้สำหรับร้องขอ IP ชุดใหม่จาก DHCP Server
+
+#### ผลลัพธ์
+
+```
+Network adapter:
+ Connection-specific DNS Suffix: example.com
+ Link-local IPv6 Address.......: <ipv6>
+ IPv4 Address..................: 10.11.10.10
+ Subnet Mask...................: 255.255.255.0
+ Default Gateway...............: 10.11.10.2
+```
 
 </Steps>

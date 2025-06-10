@@ -8,21 +8,20 @@ import { Steps, Cards } from "nextra/components";
 
 Technitium คือซอฟต์แวร์ DNS Server แบบโอเพนซอร์ส (Open Source) ที่มีความสามารถหลากหลาย ถูกออกแบบมาให้ ใช้งานง่ายผ่าน Web-based Dashboard โดยรองรับทั้งการทำงานแบบ Authoritative DNS (จัดการโซน DNS ของตัวเอง) และ Recursive Resolver (สอบถาม DNS จากเซิร์ฟเวอร์ภายนอก)
 
-ฟังก์ชันเด่น ๆ ของ Technitium:
-- ความปลอดภัยสูง: รองรับโปรโตคอล DNS แบบเข้ารหัส (DNS-over-TLS, DNS-over-HTTPS, DNS-over-QUIC) เพื่อปกป้องข้อมูล DNS ของคุณจากการสอดแนม
-- การบล็อกเนื้อหา: สามารถสร้าง Blocklist เพื่อบล็อกโฆษณาและเว็บไซต์อันตรายได้
-- รองรับหลากหลายแพลตฟอร์ม: สามารถติดตั้งและทำงานได้บน Linux, Windows, macOS, และ Raspberry Pi
-- ประสิทธิภาพสูง: จัดการคำขอ DNS ได้จำนวนมาก
-- มี DHCP Server ในตัว: เพิ่มความสะดวกในการจัดการ IP Address ในเครือข่ายของคุณ
-- ฟังก์ชัน DNS ขั้นสูง: รองรับคุณสมบัติอย่าง Split Horizon, Geolocation routing, Dynamic DNS, และ Zone transfers
-- ใช้งานง่าย: มี Web UI ที่เข้าใจง่าย พร้อมการตั้งค่าเริ่มต้นที่สามารถใช้งานได้ทันที
+**Features:**
+- รองรับโปรโตคอล DNS แบบเข้ารหัส (DNS-over-TLS, DNS-over-HTTPS, DNS-over-QUIC) เพื่อปกป้องข้อมูล DNS ของคุณจากการสอดแนม
+- สามารถสร้าง Blocklist เพื่อบล็อกโฆษณาและเว็บไซต์อันตรายได้
+- รองรับหลากหลายแพลตฟอร์ม
+- มี DHCP Server ในตัว
+- รองรับคุณสมบัติอย่าง Split Horizon, Geolocation routing, Dynamic DNS, และ Zone transfers
+- มี Web UI ที่เข้าใจง่าย พร้อมการตั้งค่าเริ่มต้นที่สามารถใช้งานได้ทันที
 
 
 ## ขั้นตอนการติดตั้ง Technitium DNS บน Linux Ubuntu 22.04 LTS
 
 ข้อกำหนดขั้นต่ำสำหรับสภาพแวดล้อมที่คุณจะติดตั้ง Technitium:
 
-- vCPU: 2 Core
+- CPU: 2 Core
 - Memory: 2 GB
 - Storage: 20 GB
 - OS: Linux Ubuntu 22.04 LTS

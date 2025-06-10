@@ -1,5 +1,5 @@
 ---
-title: "Setup Guide"
+title: "DNS Server"
 description: "Complete guide for setting up and configuring Technitium DNS Server"
 ---
 
@@ -16,8 +16,6 @@ DNS Server (Domain Name System Server) เปรียบเสมือน **"�
 <Steps>
 
 ### เข้าสู่หน้าเว็บจัดการ
-
-เปิดเบราว์เซอร์และเข้าไปที่:
 
 ```
 http://<ip_address>:5380
@@ -110,7 +108,7 @@ Forward Zone ใช้สำหรับจับคู่ชื่อโดเ�
 
 </Steps>
 
-### Reverse Zone (ไม่บังคับ)
+### Reverse Zone
 
 Reverse Zone ใช้สำหรับค้นหาชื่อโดเมนจาก IP Address (Reverse DNS Lookup / PTR Record)
 
@@ -155,7 +153,7 @@ Reverse Zone ใช้สำหรับค้นหาชื่อโดเม�
 
 <Steps>
 
-### ตั้งค่า Network Adapter
+#### ตั้งค่า Network Adapter
 
 1. เปิด **Control Panel**
 2. ไปที่ **Network and Internet** > **Network and Sharing Center**
@@ -168,7 +166,7 @@ Reverse Zone ใช้สำหรับค้นหาชื่อโดเม�
    - **Preferred DNS server**: `IP Address ของ DNS Server หลัก`
    - **Alternate DNS server**: `IP Address ของ DNS Server สำรอง (ถ้ามี)`
 
-### ทดสอบการทำงาน
+#### ทดสอบการทำงาน
 
 - เปิด **Command Prompt** และทดสอบด้วยคำสั่ง:
 
@@ -205,7 +203,7 @@ Address: 10.11.254.150
 หากผลลัพธ์ที่ได้คล้ายกับตัวอย่าง แสดงว่าการตั้งค่าสำเร็จ
 </Callout>
 
-### การแก้ไขปัญหา
+#### การแก้ไขปัญหา
 
 หากพบปัญหาในการทดสอบ ให้ใช้คำสั่งเหล่านี้:
 
