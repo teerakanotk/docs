@@ -86,7 +86,7 @@ DNS Record คือรายการข้อมูลที่เก็บอ
 
 ## Example
 
-ตัวอย่างการเพิ่ม A Record ที่ zone: `example.com`
+ขั้นตอนการเพิ่ม A Record ที่ Forward zone
 
 <Steps>
 ### เข้าสู่หน้าเว็บจัดการ Technitium DNS
@@ -95,9 +95,9 @@ DNS Record คือรายการข้อมูลที่เก็บอ
 http://<ip_address>:5380
 ```
 
-### เลือก Zone ที่ต้องการเพิ่ม Record
+### เลือก Zone ที่ต้องการ
 
-- ไปที่เมนู `Zones` \> คลิกที่ `ชื่อ Zone ที่ต้องการเพิ่ม A Record` (เช่น `example.com`)
+- ไปที่เมนู `Zones` \> คลิกที่ `ชื่อ Zone` (เช่น `example.com`)
 - คลิกปุ่ม `Add Record`
 
 ![technitium-record-1](/server/technitium/technitium-record-1.png)
@@ -106,11 +106,35 @@ http://<ip_address>:5380
 - คลิกปุ่ม `Save`
 
 ![technitium-record-2](/server/technitium/technitium-record-2.png)
-
-### เสร็จสิ้น
-
-- ทดลองเปิดเว็บเบราว์เซอร์แล้วพิมพ์ `www.example.com` เพื่อทดสอบเข้าหน้าเว็บไซต์หลังจากเพิ่ม A Record หากสามารถเข้าได้แสดงว่าทำถูกขั้นตอน
-
-- **เพิ่มเติม:** คุณจะต้องมีเครื่องเซิร์ฟเวอร์ที่ให้บริการเว็บไซต์ (`www.example.com`) ด้วย
-
 </Steps>
+
+## ทดสอบ
+
+- สร้างเซิร์ฟเวอร์ 1 เครื่อง และกำหนด IP Address เป็นค่าเดียวกันกับ A Record `www.example.com`
+
+```txt
+# Environment setup
+CPU: 2 Core
+Memory: 2 GB
+Storage: 20 GB
+IPv4 Address (Static): <your_a_record_address>
+```
+
+- ติดตั้ง nginx web server
+
+```bash
+sudo apt install -y nginx
+sudo systemctl start nginx
+sudo systemctl enable nginx
+```
+
+
+- ที่เครื่อง Client ทดลองเข้าเว็บไซต์ผ่าน URL เช่น
+```
+http://www.example.com
+```
+
+- ผลลัพธ์
+
+![technitium-record-3](/server/technitium/technitium-record-3.png)
+
