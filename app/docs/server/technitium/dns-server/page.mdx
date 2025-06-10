@@ -1,174 +1,233 @@
 ---
-title: "Setup"
+title: "Technitium DNS Server Setup Guide"
+description: "Complete guide for setting up and configuring Technitium DNS Server"
 ---
 
 import { Steps, Callout } from "nextra/components";
 
 # DNS Server คืออะไร
 
-DNS Server (Domain Name System Server) เปรียบเสมือน "สมุดโทรศัพท์" ของอินเทอร์เน็ต ครับ หน้าที่หลักของมันคือการ **แปลงชื่อเว็บไซต์** ที่เราคุ้นเคย (เช่น `www.google.com`) ให้กลายเป็น **IP Address** (เช่น `172.217.160.142`) ซึ่งเป็นชุดตัวเลขที่คอมพิวเตอร์ใช้ในการสื่อสารกัน เพื่อให้คอมพิวเตอร์สามารถค้นหาและเชื่อมต่อกับเว็บไซต์ได้ถูกต้อง
+DNS Server (Domain Name System Server) เปรียบเสมือน **"สมุดโทรศัพท์"** ของอินเทอร์เน็ต 
 
+หน้าที่หลักคือการ **แปลงชื่อเว็บไซต์** ที่เราคุ้นเคย (เช่น `www.google.com`) ให้กลายเป็น **IP Address** (เช่น `172.217.160.142`) ซึ่งเป็นชุดตัวเลขที่คอมพิวเตอร์ใช้ในการสื่อสารกัน เพื่อให้คอมพิวเตอร์สามารถค้นหาและเชื่อมต่อกับเว็บไซต์ได้ถูกต้อง
 
-
-## ขั้นตอนการตั้งค่า Technitium ให้ทำหน้าที่ DNS Server
+## การตั้งค่า Technitium DNS Server
 
 <Steps>
-### เข้าสู่หน้าเว็บจัดการ Technitium DNS
 
-เปิดเว็บเบราว์เซอร์ของคุณ แล้วพิมพ์ที่อยู่ดังนี้
+### เข้าสู่หน้าเว็บจัดการ
 
-```url copy
+เปิดเบราว์เซอร์และเข้าไปที่:
+
+```
 http://<ip_address>:5380
 ```
 
-### General Settings (การตั้งค่าทั่วไป)
+### การตั้งค่าทั่วไป (General Settings)
 
-ไปที่เมนู `Settings` > `General`
+ไปที่เมนู **Settings** > **General**
 
-  - **DNS Server Domain:**  ระบุชื่อโดเมนหลักของ DNS Server ของคุณ (FQDN) เช่น `ns1.example.com`
+#### DNS Server Domain
+ระบุชื่อโดเมนหลักของ DNS Server ของคุณ (FQDN) เช่น `ns1.example.com`
 
-  ![technitium-dns-1](/server/technitium/technitium-dns-1.png)
+<Callout type="info">
+**FQDN** (Fully Qualified Domain Name) คือชื่อที่ใช้ระบุตำแหน่งของเซิร์ฟเวอร์ของคุณบนอินเทอร์เน็ตได้อย่างเฉพาะเจาะจง
 
-- เลื่อนลงมาที่หัวข้ `Zone Defaults`
+รูปแบบ: `hostname.domain.tld`
+- **hostname**: ชื่อที่คุณตั้งให้กับเซิร์ฟเวอร์ DNS (เช่น `ns1`)
+- **domain**: ชื่อโดเมนของคุณ (เช่น `example`)
+- **tld**: ส่วนต่อท้ายโดเมน (เช่น `.com`, `.net`, `.local`)
+</Callout>
 
-  - เลือก ☑️ ที่ช่อง `Use SOA Serial Date Scheme`
+![Technitium DNS General Settings](/server/technitium/technitium-dns-1.png)
 
-  ![technitium-dns-2](/server/technitium/technitium-dns-2.png)
+#### Zone Defaults
+เลื่อนลงมาที่หัวข้อ **Zone Defaults** และเลือก ☑️ **Use SOA Serial Date Scheme**
 
-  <Callout type="default">
-  การเลือก SOA Serial Date Scheme ช่วยให้สามารถทราบได้ว่าไฟล์ Zone มีการแก้ไขล่าสุดเมื่อวันที่เท่าไร เพียงแค่ดูจากตัวเลข Serial Number
-  </Callout>
+![Zone Defaults Settings](/server/technitium/technitium-dns-2.png)
 
-- เมื่อตั้งค่าเสร็จแล้ว ให้เลื่อนลงมาที่ด้านล่างสุด แล้วคลิกปุ่ม `Save Settings`
+<Callout type="default">
+**SOA Serial Date Scheme** ช่วยให้คุณทราบได้ว่าไฟล์ Zone มีการแก้ไขล่าสุดเมื่อใด โดยดูจากตัวเลข Serial Number
+</Callout>
 
-### Forwarders
+คลิกปุ่ม **Save Settings** ที่ด้านล่างสุดของหน้า
 
-Forwarders มีหน้าที่ช่วยให้ DNS Server ของคุณสามารถสอบถามชื่อโดเมนที่ไม่รู้จักจาก DNS Server ภายนอกได้
+### การตั้งค่า Forwarders
 
-ไปที่เมนู `Settings` > `Proxy & Forwarders`
+Forwarders ช่วยให้ DNS Server ของคุณสามารถสอบถามชื่อโดเมนที่ไม่รู้จักจาก DNS Server ภายนอกได้
 
-- ในหัวข้อ `Forwarders`
+- ไปที่เมนู **Settings** > **Proxy & Forwarders**
 
-  - เพิ่ม IP Address ของ DNS Server ภายนอกที่คุณต้องการใช้ เช่น 8.8.8.8 (ของ Google) หรือ 1.1.1.1 (ของ Cloudflare)
+- ในหัวข้อ **Forwarders** เพิ่ม IP Address ของ DNS Server ภายนอก เช่น:
 
-    ![technitium-dns-3](/server/technitium/technitium-dns-3.png)
+![Forwarders Configuration](/server/technitium/technitium-dns-3.png)
 
-- เมื่อตั้งค่าเสร็จแล้ว ให้เลื่อนลงมาที่ด้านล่างสุด แล้วคลิกปุ่ม `Save Settings`
+- คลิกปุ่ม **Save Settings** ที่ด้านล่างสุด
+
 </Steps>
 
-## ตั้งค่า Zone (การกำหนดชื่อโดเมน)
+## การตั้งค่า Zone (การกำหนดชื่อโดเมน)
 
-![technitium-dns-4](/server/technitium/technitium-dns-4.png)
+![Zone Management Interface](/server/technitium/technitium-dns-4.png)
 
 ### Forward Zone
 
 Forward Zone ใช้สำหรับจับคู่ชื่อโดเมนกับ IP Address เช่น การระบุให้ `www.example.com` ชี้ไปที่ `192.168.1.10`
 
-- ไปที่เมนู `Zones`
+<Steps>
 
-- คลิกปุ่ม `Add Zone`
+### สร้าง Forward Zone
 
-  - Zone: ใส่ชื่อโดเมนที่คุณต้องการ เช่น `example.com`
-  - Type: `Primary Zone`
-  - Zone Serial: ติ๊ก ☑️ `Use SOA Serial Date Scheme`
+1. ไปที่เมนู **Zones**
+2. คลิกปุ่ม **Add Zone**
+3. กำหนดค่าดังนี้:
+   - **Zone**: ใส่ชื่อโดเมนที่ต้องการ เช่น `example.com`
+   - **Type**: `Primary Zone`
+   - **Zone Serial**: ติ๊ก ☑️ `Use SOA Serial Date Scheme`
+4. คลิกปุ่ม **Add**
 
-- จากนั้นคลิกปุ่ม `Add`
+![Forward Zone Creation](/server/technitium/technitium-dns-5.png)
 
-![technitium-dns-5](/server/technitium/technitium-dns-5.png)
+5. Forward Zone สำหรับ `example.com` ถูกสร้างเสร็จเรียบร้อยแล้ว
 
-- ตอนนี้คุณสร้าง Forward Zone สำหรับ `example.com` เสร็จเรียบร้อยแล้ว
+![Forward Zone Result](/server/technitium/technitium-dns-6.png)
 
-![technitium-dns-6](/server/technitium/technitium-dns-6.png)
+### เพิ่ม Forward Zone A Record สำหรับ Nameserver
+
+1. คลิกปุ่ม **Add Record**
+2. **Name:** ใส่ชื่อโฮสต์เนมของเครื่องเซิร์ฟเวอร์ เช่น `ns`
+3. **Type:** เลือกเป็น `A`
+4. **IPv4 Address:** ระบุ IP Address ของเครื่องเซิร์ฟเวอร์ เช่น `10.11.254.150`
+5. คลิกปุ่ม `Save`
+
+![Forward Zone A Record](/server/technitium/technitium-dns-9.png)
+
+6. เสร็จสิ้นขั้นตอนการสร้าง A Record สำหรับ nameserver
+
+### ผลลัพธ์ที่ควรได้
+
+![Result](/server/technitium/technitium-dns-10.png)
+
+</Steps>
 
 ### Reverse Zone (ไม่บังคับ)
 
-Reverse Zone ใช้สำหรับค้นหาชื่อโดเมนจาก IP Address (หรือที่เรียกว่า Reverse DNS Lookup / PTR Record) เช่น หากมีคนรู้แค่ IP `192.168.1.10` ก็สามารถหาได้ว่า IP นี้คือ `server1.yourdomain.local`
+Reverse Zone ใช้สำหรับค้นหาชื่อโดเมนจาก IP Address (Reverse DNS Lookup / PTR Record)
 
-- คลิกปุ่ม `Add Zone` อีกครั้ง
+<Steps>
 
-  - Zone: ใส่ที่อยู่ IP Address ของเครือข่ายที่ต้องการ เช่น (192.168.0.0/24)
-  - Type: `Primary Zone`
-  - Zone Serial: ติ๊ก ☑️ ที่ช่อง
+### สร้าง Reverse Zone
 
-- คลิกปุ่ม `Add`
+1. คลิกปุ่ม **Add Zone** อีกครั้ง
+2. กำหนดค่าดังนี้:
+   - **Zone**: ใส่ที่อยู่ IP Address ของเครือข่าย เช่น `10.11.254.0/24`
+   - **Type**: `Primary Zone`
+   - **Zone Serial**: ติ๊ก ☑️ `Use SOA Serial Date Scheme`
+3. คลิกปุ่ม **Add**
 
-![technitium-dns-7](/server/technitium/technitium-dns-7.png)
+![Reverse Zone Creation](/server/technitium/technitium-dns-7.png)
 
-- ตอนนี้คุณสร้าง Reverse Zone สำหรับเครือข่าย `192.168.0.0/24` เสร็จแล้ว
+4. Reverse Zone สำหรับเครือข่าย `10.11.254.0/24` ถูกสร้างเสร็จแล้ว
 
-![technitium-dns-8](/server/technitium/technitium-dns-8.png)
+![Reverse Zone Result](/server/technitium/technitium-dns-8.png)
 
-## ขั้นตอนการตั้งค่าให้เครื่อง Client ใช้งาน DNS Server ที่สร้างไว้
+### เพิ่ม Reverse Zone PTR Record สำหรับเครื่อง Nameserver
 
-เมื่อตั้งค่า Technitium เสร็จแล้ว เรามาบอกให้เครื่องคอมพิวเตอร์ (Client) รู้จักและใช้ DNS Server ที่คุณเพิ่งสร้าง
+1. คลิกปุ่ม **Add Record**
+2. **Name:** ใส่ IP Address ตัวสุดท้ายของเครื่องเซิร์ฟเวอร์ เช่น `150`
+3. **Type:** เลือกเป็น `PTR`
+4. **Domain Name:** ระบุ FQDN ของเครื่องเซิร์ฟเวอร์ เช่น `ns1.example.com`
+5. คลิกปุ่ม `Save`
+
+![Reverse Zone PTR Record](/server/technitium/technitium-dns-11.png)
+
+### ผลลัพธ์ที่ควรได้
+
+![Result](/server/technitium/technitium-dns-12.png)
+
+</Steps>
+
+## การตั้งค่าเครื่อง Client
+
+เมื่อตั้งค่า Technitium เสร็จแล้ว เราต้องกำหนดให้เครื่องคอมพิวเตอร์ (Client) ใช้ DNS Server ที่เราสร้างขึ้น
 
 ### สำหรับ Windows
 
 <Steps>
-### ตั้งค่า Network adapter
 
-- เปิด `Control Panel`
+### ตั้งค่า Network Adapter
 
-- ไปที่ `Network and Internet` > `Network and Sharing Center`
+1. เปิด **Control Panel**
+2. ไปที่ **Network and Internet** > **Network and Sharing Center**
+3. ที่แถบด้านซ้าย คลิก **Change adapter settings**
+4. คลิกขวาที่ Network adapter ที่เชื่อมต่อกับเครือข่ายเดียวกับ DNS Server
+5. เลือก **Properties**
+6. เลือก **Internet Protocol Version 4 (TCP/IPv4)**
+7. คลิกปุ่ม **Properties**
+8. กำหนดค่า DNS:
+   - **Preferred DNS server**: `IP Address ของ DNS Server หลัก`
+   - **Alternate DNS server**: `IP Address ของ DNS Server สำรอง (ถ้ามี)`
 
-- ที่แถบด้านซ้ายมือ คลิก `Change adapter settings`
+### ทดสอบการทำงาน
 
-- คลิกขวาที่ `Network adapter` ที่กำลังเชื่อมต่อกับเครือข่ายเดียวกับ DNS Server ของคุณ (เช่น `VMnet8` ถ้าคุณใช้ VMware Workstation)
+- เปิด **Command Prompt** และทดสอบด้วยคำสั่ง:
 
-- เลือก `Properties`
-
-- จะมีหน้าต่างใหม่เด้งขึ้นมา ให้เลือก `Internet Protocol Version 4 (TCP/IPv4)`
-
-- คลิกปุ่ม `Properties`
-
-- ที่หน้าต่าง `Internet Protocol Version 4 (TCP/IPv4) Properties`
-  - **Preferred DNS server:** `ใส่ IP Address ของ DNS Server หลักของคุณ`
-  - **Alternate DNS server:** `ใส่ IP Address ของ DNS Server สำรอง (ถ้ามี)`
-
-### ทดสอบด้วย nslookup
-
-- เปิด `Command Prompt` (พิมพ์ `cmd` ในช่องค้นหาของ Windows แล้วกด Enter)
-- พิมพ์คำสั่ง `nslookup` แล้วกด `Enter`
-
+```cmd
+nslookup
 ```
-C:\Users\user> nslookup
+
+```cmd
+Output:
+
 Default Server: Unknown
 Address: 192.168.100.1
 ```
 
-- ระบุ `nameserver` ที่ต้องการทดสอบ
+<Callout type="info">
+ไม่ต้องตกใจหาก `Address` ที่ได้ไม่เหมือนกันกับตัวอย่าง สามารถไปขั้นตอนถัดไปได้เลย
+</Callout>
 
+- ทดสอบการเชื่อมต่อกับ DNS Server:
+```cmd
+server <nameserver>
 ```
-> server <nameserver>
-Default Server: <nameserver>
-Address: <nameserver_address>
+
+> แทนที่ `<nameserver>` ด้วยชื่อ FQDN ของเครื่องเซิร์ฟเวอร์คุณ เช่น `ns1.example.com`
+
+```cmd
+Output:
+
+Default Server: ns1.exmaple.com
+Address: 10.11.254.150
 ```
 
-  ตัวอย่าง:
+<Callout type="default">
+หากผลลัพธ์ที่ได้คล้ายกับตัวอย่าง แสดงว่าการตั้งค่าสำเร็จ
+</Callout>
 
-  ```
-  > server ns1.homelab.local
-  Default Server: ns1.homelab.local
-  Address: 10.11.254.10
-  ```
+### การแก้ไขปัญหา
 
-  <Callout type="default">
-  หากผลลัพธ์ที่ได้คล้ายกับตัวอย่าง แสดงว่าคุณตั้งค่าสำเร็จแล้ว!
-  </Callout>
+หากพบปัญหาในการทดสอบ ให้ใช้คำสั่งเหล่านี้:
 
-### (ไม่บังคับ) หากมีปัญหาในการทดสอบ
-
-หากขั้นตอนที่ 2 ไม่ได้ผล ลองใช้คำสั่งเหล่านี้เพื่อล้างค่าและรีเฟรชการเชื่อมต่อเครือข่าย
-
-- ใช้คำสั่ง `ipconfig /flushdns` เพื่อล้างแคช DNS ในเครื่องของคุณ
-
-```
+**ล้างแคช DNS:**
+```cmd
 ipconfig /flushdns
 ```
 
-- ใช้คำสั่ง `ipconfig /renew` เพื่อขอ IP Address ใหม่จาก DHCP Server
-
-```
+**ขอ IP Address ใหม่:**
+```cmd
 ipconfig /renew
 ```
+
 </Steps>
+
+## สรุป
+
+การตั้งค่า Technitium DNS Server ประกอบด้วยขั้นตอนหลัก:
+
+1. **General Settings**: กำหนด DNS Server Domain และเปิดใช้งาน SOA Serial Date Scheme
+2. **Forwarders**: เพิ่ม DNS Server ภายนอกสำหรับการค้นหาโดเมนที่ไม่รู้จัก
+3. **Zone Management**: สร้าง Forward Zone และ Reverse Zone (ถ้าต้องการ)
+4. **Client Configuration**: ตั้งค่าเครื่อง Client ให้ใช้ DNS Server ที่สร้างขึ้น
+
+เมื่อดำเนินการครบทุกขั้นตอนแล้ว คุณจะมี DNS Server ที่พร้อมใช้งานสำหรับเครือข่ายของคุณ

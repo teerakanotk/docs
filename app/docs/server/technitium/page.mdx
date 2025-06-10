@@ -6,27 +6,29 @@ import { Steps, Cards } from "nextra/components";
 
 # Technitium
 
-Technitium คือซอฟต์แวร์แบบโอเพนซอร์ส (Open Source) ที่มีความสามารถหลากหลาย ถูกออกแบบมาให้ใช้งานง่ายด้วย Web-based Dashboard รองรับทั้งการทำงานแบบ Authoritative DNS (จัดการโซน DNS ของตัวเอง) และ Recursive Resolver (สอบถาม DNS จากเซิร์ฟเวอร์ภายนอก)
+Technitium คือซอฟต์แวร์ DNS Server แบบโอเพนซอร์ส (Open Source) ที่มีความสามารถหลากหลาย ถูกออกแบบมาให้ ใช้งานง่ายผ่าน Web-based Dashboard โดยรองรับทั้งการทำงานแบบ Authoritative DNS (จัดการโซน DNS ของตัวเอง) และ Recursive Resolver (สอบถาม DNS จากเซิร์ฟเวอร์ภายนอก)
 
-**คุณสมบัติเด่น:**
+ฟังก์ชันเด่น ๆ ของ Technitium:
+- ความปลอดภัยสูง: รองรับโปรโตคอล DNS แบบเข้ารหัส (DNS-over-TLS, DNS-over-HTTPS, DNS-over-QUIC) เพื่อปกป้องข้อมูล DNS ของคุณจากการสอดแนม
+- การบล็อกเนื้อหา: สามารถสร้าง Blocklist เพื่อบล็อกโฆษณาและเว็บไซต์อันตรายได้
+- รองรับหลากหลายแพลตฟอร์ม: สามารถติดตั้งและทำงานได้บน Linux, Windows, macOS, และ Raspberry Pi
+- ประสิทธิภาพสูง: จัดการคำขอ DNS ได้จำนวนมาก
+- มี DHCP Server ในตัว: เพิ่มความสะดวกในการจัดการ IP Address ในเครือข่ายของคุณ
+- ฟังก์ชัน DNS ขั้นสูง: รองรับคุณสมบัติอย่าง Split Horizon, Geolocation routing, Dynamic DNS, และ Zone transfers
+- ใช้งานง่าย: มี Web UI ที่เข้าใจง่าย พร้อมการตั้งค่าเริ่มต้นที่สามารถใช้งานได้ทันที
 
-- รองรับ Encrypted DNS Protocols (DNS-over-TLS, DNS-over-HTTPS, DNS-over-QUIC) เพื่อปกป้องข้อมูล DNS จากการสอดแนม
-
-- สามารถกำหนด Blocklist เพื่อบล็อกโฆษณาและเว็บไซต์อันตรายได้
-
-- สามารถติดตั้งและทำงานได้บนหลายแพลตฟอร์ม เช่น Linux, Windows, macOS, และ Raspberry Pi
-
-- สามารถจัดการคำขอ DNS ได้จำนวนมาก
-
-- มี DHCP Server ในตัว
-
-- รองรับฟังก์ชัน DNS ขั้นสูง เช่น Split Horizon, Geolocation routing, Dynamic DNS, Zone transfers
-
-- ใช้งานง่ายมี Web UI ที่เข้าใจง่าย พร้อมการตั้งค่าเริ่มต้นที่ทำงานได้ทันที
 
 ## ขั้นตอนการติดตั้ง Technitium DNS บน Linux Ubuntu 22.04 LTS
 
-### อัปเดต Repository ให้เป็นแพตช์ล่าสุด
+ข้อกำหนดขั้นต่ำสำหรับสภาพแวดล้อมที่คุณจะติดตั้ง Technitium:
+
+- vCPU: 2 Core
+- Memory: 2 GB
+- Storage: 20 GB
+- OS: Linux Ubuntu 22.04 LTS
+
+<Steps>
+### อัปเดต Repository
 
 ```bash copy
 sudo apt update && sudo apt upgrade -y
@@ -42,48 +44,35 @@ curl -sSL https://download.technitium.com/dns/install.sh | sudo bash
 
 ### การตั้งค่า Technitium DNS ครั้งแรก
 
-<Steps>
+- **เข้าสู่หน้าเว็บจัดการ Technitium DNS Server**
 
-### เข้าสู่หน้าเว็บจัดการ Technitium DNS Server
-
-เปิดเว็บเบราว์เซอร์แล้วพิมพ์ URL ต่อไปนี้เพื่อเข้าถึงหน้าเว็บจัดการของ Technitium DNS
-
-```url copy
+```
 http://<ip_address>:5380
 ```
 
-![technitium-setup-1](/server/technitium/technitium-setup-1.png)
+> อย่าลืมเปลี่ยน `<ip_address>` เป็น IP ของเครื่องเซิร์ฟเวอร์คุณ
 
-### ตั้งค่ารหัสผ่าน Administrator
+- **ตั้งค่ารหัสผ่าน Administrator**<br/>
+  เมื่อล็อกอินเข้าสู่ระบบครั้งแรก Technitium DNS จะบังคับให้คุณ **ตั้งค่ารหัสผ่านสำหรับบัญชีผู้ดูแลระบบ (admin)**
 
-เมื่อล็อกอินเข้าสู่ระบบครั้งแรก Technitium DNS Server จะบังคับให้คุณตั้งค่ารหัสผ่านสำหรับบัญชีผู้ดูแลระบบ (`admin`)
+![technitium-install-1](/server/technitium/technitium-install-1.png)
 
-![technitium-setup-2](/server/technitium/technitium-setup-2.png)
+- **ตั้งค่าหน้าเว็บเพื่อความปลอดภัย (Web Service Settings)**<br/>
+  การตั้งค่าในส่วนนี้จะช่วยเพิ่มความปลอดภัยให้กับการเข้าถึงหน้าเว็บจัดการผ่าน HTTPS เพื่อให้การสื่อสารระหว่างเบราว์เซอร์ของคุณกับเซิร์ฟเวอร์ถูกเข้ารหัส
 
-### ตั้งค่าหน้าเว็บเพื่อความปลอดภัย (Web Service Settings)
+  - ไปที่เมนู `Settings`
 
-การตั้งค่าในส่วนนี้จะช่วยเพิ่มความปลอดภัยให้กับการเข้าถึงหน้าเว็บจัดการผ่าน HTTPS เพื่อให้การสื่อสารระหว่างเบราว์เซอร์ของคุณกับเซิร์ฟเวอร์ถูกเข้ารหัส
+  - เลือกเมนูย่อย `Web Service`
 
-- ไปที่เมนู `Settings`
+  - ในส่วน `HTTPS Options` ให้คุณติ๊กถูกที่ช่องเหล่านี้
+    - ☑️ `Enable HTTPS`: เพื่อเปิดใช้งานการเชื่อมต่อที่เข้ารหัสแบบ HTTPS
+    - ☑️ `Enable HTTP to HTTPS Redirection`: เพื่อให้การเข้าถึงผ่าน HTTP ถูกเปลี่ยนเส้นทางไปยัง HTTPS โดยอัตโนมัติ
+    - ☑️ `Use A Self Signed TLS Certificate When TLS Certificate File Path is Unspecified`: เพื่อให้ Technitium สร้าง Self-Signed Certificate ให้เองอัตโนมัติ ในกรณีที่คุณยังไม่มีไฟล์ Certificate ของตัวเอง
 
-- เลือกเมนูย่อย `Web Service`
+    ![tehcnitium-install-2](/server/technitium/tehcnitium-install-2.png)
 
-- ในส่วน `HTTPS Options` ให้ทำเครื่องหมายในช่องต่อไปนี้
-
-  - ☑️ `Enable HTTPS`: เพื่อเปิดใช้งานการเชื่อมต่อที่เข้ารหัสแบบ HTTPS
-  - ☑️ `Enable HTTP to HTTPS Redirection`: เพื่อให้การเข้าถึงผ่าน HTTP ถูกเปลี่ยนเส้นทางไปยัง HTTPS โดยอัตโนมัติ
-  - ☑️ `Use A Self Signed TLS Certificate When TLS Certificate File Path is Unspecified`: เพื่อให้ Technitium สร้าง Self-Signed Certificate ให้เองอัตโนมัติเมื่อคุณยังไม่ได้ระบุไฟล์ Certificate ของคุณ
-
-- เมื่อตั้งค่าทั้งหมดเสร็จเรียบร้อยแล้ว ให้เลื่อนหน้าจอลงมาที่ด้านล่างสุด แล้วคลิกปุ่ม `Save Settings` เพื่อบันทึกการเปลี่ยนแปลง
-
-![technitium-dns-3](/server/technitium/technitium-dns-3.png)
+- เมื่อตั้งค่าทั้งหมดเสร็จเรียบร้อยแล้ว ให้เลื่อนหน้าจอลงมาที่ด้านล่างสุด แล้วคลิกปุ่ม `Save Settings`
 
 </Steps>
 
 เสร็จสิ้นขั้นตอนการตั้งค่าเบื้องต้นสำหรับ Technitium
-
-## เนื้อหาถัดไป
-
-<Cards>
-<Cards.Card title='DNS' href='./technitium/dns' arrow/>
-</Cards>
