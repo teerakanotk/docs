@@ -1,5 +1,7 @@
 export default {
-  "proxmox-ve": "",
+  "proxmox-ve": {
+    title: "Proxmox VE",
+  },
   technitium: "",
   npm: {
     title: "Nginx Proxy Manager",
