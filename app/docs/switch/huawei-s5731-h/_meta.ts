@@ -1,6 +1,7 @@
 export default {
-  "interface-type": "",
+  index: "",
+  interface: "",
   vlan: "",
-  "route-static": "",
+  routing: "",
   "dhcp-relay": "",
 };

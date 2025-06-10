@@ -1,5 +1,5 @@
 export default {
   index: "",
-  dns: "",
+  "dns-server": "",
   dhcp: "",
 };

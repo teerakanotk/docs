@@ -6,7 +6,7 @@ export default {
   switch: {
     title: "Switch",
   },
-  ap: {
+  "access-point": {
     title: "Access Point",
   },
   server: {

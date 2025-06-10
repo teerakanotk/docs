@@ -1,4 +1,4 @@
 export default {
-  setup: "",
+  index: "",
   record: "",
 };
