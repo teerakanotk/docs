@@ -1,0 +1,76 @@
+---
+title: Technitium
+asIndexPage: true
+---
+
+import { Steps } from "nextra/components";
+
+# Technitium
+
+Technitium คือ **DNS Server แบบโอเพนซอร์ส** ที่ใช้งานง่าย มาพร้อม Web-based Dashboard ที่ช่วยให้การจัดการระบบ DNS เป็นเรื่องง่าย ไม่ว่าจะเป็นการทำหน้าที่เป็น **Authoritative DNS** (จัดการโซน DNS ของตัวเอง) หรือ **Recursive Resolver** (สอบถาม DNS จากเซิร์ฟเวอร์ภายนอก)
+
+## คุณสมบัติเด่นของ Technitium DNS
+
+- **ความปลอดภัยสูง**: รองรับโปรโตคอล DNS แบบเข้ารหัส (DNS-over-TLS, DNS-over-HTTPS, DNS-over-QUIC) เพื่อปกป้องข้อมูล DNS ของคุณจากการสอดแนม
+
+- **บล็อกโฆษณาและภัยคุกคาม**: สามารถสร้าง Blocklist เพื่อบล็อกโฆษณาและเว็บไซต์อันตรายได้
+
+- **รองรับหลากหลายแพลตฟอร์ม**: ใช้งานได้บนระบบปฏิบัติการที่หลากหลาย
+
+- **DHCP Server ในตัว**: มี DHCP Server ในตัวเพื่อช่วยจัดการ IP Address ในเครือข่าย
+
+- **ฟังก์ชันขั้นสูง**: รองรับคุณสมบัติอย่าง Split Horizon, Geolocation routing, Dynamic DNS, และ Zone transfers
+
+- **Web UI ใช้งานง่าย**: มาพร้อม Web UI ที่เข้าใจง่าย พร้อมการตั้งค่าเริ่มต้นที่สามารถใช้งานได้ทันที
+
+## ขั้นตอนการติดตั้ง Technitium DNS บน Ubuntu 22.04 LTS
+
+### 1\. อัปเดต Repository ของระบบ
+
+เริ่มต้นด้วยการอัปเดตแพ็คเกจในระบบของคุณให้เป็นปัจจุบันเสมอ
+
+```bash copy
+sudo apt update && sudo apt upgrade -y
+```
+
+### 2\. ติดตั้ง Technitium DNS
+
+ใช้คำสั่ง `curl` เพื่อดาวน์โหลดและรันสคริปต์การติดตั้งอย่างรวดเร็ว
+
+```bash copy
+curl -sSL https://download.technitium.com/dns/install.sh | sudo bash
+```
+
+## การตั้งค่าเริ่มต้นเมื่อเข้าสู่ Technitium DNS ครั้งแรก
+
+<Steps>
+
+### 1\. เข้าสู่หน้าเว็บจัดการ
+
+เปิดเว็บเบราว์เซอร์และเข้าถึงหน้าจัดการ Technitium DNS โดยใช้ IP Address ของเซิร์ฟเวอร์ของคุณพร้อมพอร์ต 5380
+
+```
+http://<ip_address>:5380
+```
+
+### 2\. กำหนดรหัสผ่าน Administrator
+
+เมื่อเข้าสู่ระบบครั้งแรก ระบบจะให้คุณกำหนดรหัสผ่านสำหรับบัญชี **Administrator** เพื่อความปลอดภัย
+
+### 3\. ตั้งค่า Web Service ให้ใช้ HTTPS
+
+เพื่อความปลอดภัยในการเข้าถึง Web UI แนะนำให้เปิดใช้งาน HTTPS
+
+  * ไปที่เมนู **Settings**
+
+  * เลือกเมนูย่อย **Web Service**
+
+  * ในส่วน **HTTPS Options** ให้ติ๊กถูกที่ช่องต่อไปนี้:
+
+      * ☑️ `Enable HTTPS`
+      * ☑️ `Enable HTTP to HTTPS Redirection`
+      * ☑️ `Use A Self Signed TLS Certificate When TLS Certificate File Path is Unspecified`
+
+  * เลื่อนลงมาด้านล่างสุด แล้วคลิกปุ่ม **Save Settings**
+
+</Steps>

@@ -1,10 +1,6 @@
 export default {
-  index: {
-    type: "page",
-    display: "hidden",
-  },
-  docs: {
-    type: "page",
-    title: "Documentation",
-  },
+  server: "",
+  firewall: "",
+  switch: "",
+  ap: "",
 };

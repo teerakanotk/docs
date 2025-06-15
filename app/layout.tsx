@@ -5,7 +5,6 @@ import "./globals.css";
 import { Footer, Layout, Navbar } from "nextra-theme-docs";
 import { Head } from "nextra/components";
 import { getPageMap } from "nextra/page-map";
-import "nextra-theme-docs/style.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,14 +18,14 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "CTS Documents",
-    template: "%s | CTS Documents",
+    default: "CTS Document",
+    template: "%s | CTS Document",
   },
 };
 
 const navbar = (
   <Navbar
-    logo={<b>CTS Documents</b>}
+    logo={<p>CTS Document</p>}
     projectLink={"https://github.com/teerakanotk/docs"}
   />
 );
