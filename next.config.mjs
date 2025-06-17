@@ -2,14 +2,9 @@ import nextra from "nextra";
 
 const withNextra = nextra({
   search: { codeblocks: false },
-  // contentDirBasePath: "/docs",
   defaultShowCopyCode: true,
 });
 
-const nextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-};
+const nextConfig = {};
 
 export default withNextra(nextConfig);
