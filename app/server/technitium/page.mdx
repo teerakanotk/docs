@@ -67,7 +67,7 @@ http://<ip_address>:5380
   - ☑️ `Enable HTTP to HTTPS Redirection`
   - ☑️ `Use A Self Signed TLS Certificate When TLS Certificate File Path is Unspecified`
 
-  ![technitium-install-1](/server/technitium/technitium-install-1.png)
+  ![technitium-install-1](/assets/server/technitium-install-1.png)
 
 - เลื่อนลงมาด้านล่างสุด แล้วคลิกปุ่ม **Save Settings**
 
@@ -95,7 +95,7 @@ DNS หรือ Domain Name System คือ "สมุดโทรศัพท
 > - `domain`: ชื่อโดเมน (เช่น `yourdomain`)
 > - `tld`: ส่วนต่อท้ายโดเมน (เช่น `.com` หากไม่ได้จดโดเมนกับผู้ให้บริการ แนะนำให้ใช้ `.local` เป็น tld)
 
-![technitium-dns-1](/server/technitium/technitium-dns-1.png)
+![technitium-dns-1](/assets/server/technitium-dns-1.png)
 
 - ตั้งค่า Zone Defaults
 
@@ -103,7 +103,7 @@ DNS หรือ Domain Name System คือ "สมุดโทรศัพท
 
   - เลือก ☑️ **Use SOA Serial Date Scheme**
 
-    ![technitium-dns-2](/server/technitium/technitium-dns-2.png)
+    ![technitium-dns-2](/assets/server/technitium-dns-2.png)
 
 - คลิกปุ่ม **Save Settings** ที่ด้านล่างสุด
 
@@ -130,7 +130,7 @@ Forwarders ช่วยให้ DNS Server ของคุณสามารถ
 
 การจัดการ Zone คือการกำหนดว่าโดเมนหรือ IP Address ใดจะถูกแปลงไปเป็นอะไร
 
-![technitium-dns-4](/server/technitium/technitium-dns-4.png)
+![technitium-dns-4](/assets/server/technitium-dns-4.png)
 
 ### Forward Zone (แปลงชื่อโดเมนไปยัง IP Address)
 
@@ -149,13 +149,13 @@ Forward Zone ใช้สำหรับจับคู่ชื่อโดเ�
    - **Type**: `Primary Zone`
    - **Zone Serial**: ติ๊ก ☑️ `Use SOA Serial Date Scheme`
 
-   ![technitium-dns-5](/server/technitium/technitium-dns-5.png)
+   ![technitium-dns-5](/assets/server/technitium-dns-5.png)
 
 - คลิกปุ่ม **Add**
 
 - Forward Zone สำหรับ `ctsurin.local` จะถูกสร้างขึ้น
 
-![technitium-dns-6](/server/technitium/technitium-dns-6.png)
+![technitium-dns-6](/assets/server/technitium-dns-6.png)
 
 #### เพิ่ม A Record สำหรับ Nameserver
 
@@ -169,13 +169,13 @@ Forward Zone ใช้สำหรับจับคู่ชื่อโดเ�
 
 - **IPv4 Address:** ระบุ IP Address ของเครื่องเซิร์ฟเวอร์ (เช่น `10.11.254.10`)
 
-![technitium-dns-7](/server/technitium/technitium-dns-7.png)
+![technitium-dns-7](/assets/server/technitium-dns-7.png)
 
 - คลิกปุ่ม **Save**
 
 #### ผลลัพธ์ที่ควรได้
 
-![technitium-dns-8](/server/technitium/technitium-dns-8.png)
+![technitium-dns-8](/assets/server/technitium-dns-8.png)
 
 </Steps>
 
@@ -196,13 +196,13 @@ Reverse Zone ใช้สำหรับค้นหาชื่อโดเม�
    - **Type**: เลือก `Primary Zone`
    - **Zone Serial**: ติ๊ก ☑️ `Use SOA Serial Date Scheme`
 
-   ![technitium-dns-9](/server/technitium/technitium-dns-9.png)
+   ![technitium-dns-9](/assets/server/technitium-dns-9.png)
 
 - คลิกปุ่ม **Add**
 
 - Reverse Zone สำหรับเครือข่าย `10.11.254.0/24` จะถูกสร้างขึ้น
 
-![technitium-dns-10](/server/technitium/technitium-dns-10.png)
+![technitium-dns-10](/assets/server/technitium-dns-10.png)
 
 #### เพิ่ม PTR Record สำหรับ Nameserver
 
@@ -214,13 +214,13 @@ Reverse Zone ใช้สำหรับค้นหาชื่อโดเม�
    - **Type:** เลือก `PTR`
    - **Domain Name:** ระบุ FQDN ของเครื่องเซิร์ฟเวอร์ (เช่น `ns1.ctsurin.local`)
 
-   ![technitium-dns-11](/server/technitium/technitium-dns-11.png)
+   ![technitium-dns-11](/assets/server/technitium-dns-11.png)
 
 - คลิกปุ่ม **Save**
 
 #### ผลลัพธ์ที่ควรได้
 
-![technitium-dns-12](/server/technitium/technitium-dns-12.png)
+![technitium-dns-12](/assets/server/technitium-dns-12.png)
 
 </Steps>
 
