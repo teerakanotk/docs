@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: {
     default: "CTS Document",
-    template: "%s | CTS Document",
+    template: "%s - CTS Document",
   },
 };
 
@@ -29,7 +29,7 @@ const navbar = (
     projectLink={"https://github.com/teerakanotk/docs"}
   />
 );
-const footer = <Footer>© {new Date().getFullYear()} Document Project</Footer>;
+const footer = <Footer>© {new Date().getFullYear()} CTS Document</Footer>;
 
 export default async function RootLayout({
   children,
