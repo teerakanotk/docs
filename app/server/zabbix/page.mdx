@@ -19,70 +19,43 @@ import { Steps } from 'nextra/components'
 
 <Steps>
 
-### ติดตั้ง Zabbix อัตโนมัติจาก Script
+### ติดตั้ง Zabbix
 
 ```bash
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/teerakanotk/ctsurin-docs/main/script/zabbix/install.sh)"
 ```
 
 ```bash
-output:
+========================================================
 
---------------------------------------------------------
+Starting Zabbix Server 7.0 installation
+Detailed installation progress and logs are being written to:
+  /tmp/zabbix_install_<date_time>.log
 
-Starting Zabbix Server 7.0 installation with PostgreSQL 17 and Nginx on Ubuntu...
-Detailed installation progress and logs are being written to: /tmp/zabbix_install_<date_time>.log
+========================================================
 
---------------------------------------------------------
---- Updating system and installing prerequisites ---
-  Executing...
-  [OK]
---- Configuring system locale to en_US.UTF-8 ---
-  Executing...
-  [OK]
---- Installing Zabbix repository ---
-  Executing...
-  [OK]
---- Installing Zabbix server, frontend, and agent2 ---
-  Executing...
-  [OK]
---- Installing Zabbix agent2 plugins ---
-  Executing...
-  [OK]
---- Installing PostgreSQL 17 ---
-  Executing...
-  [OK]
---- Setting up PostgreSQL database for Zabbix ---
-  [OK]
---- Importing initial Zabbix database schema and data ---
-  Executing...
-  [OK]
---- Configuring Zabbix Server ---
-  Executing...
-  [OK]
---- Removing default Nginx site configuration ---
-  Executing...
-  [OK]
---- Enabling and starting Zabbix services ---
-  Executing...
-  [OK]
+Executing...
 ```
 
-### รอจนกว่าจะได้ผลลัพธ์ดังตัวอย่าง
+### รอจนกว่ากระบวนการติดตั้งจะเสร็จสมบูรณ์
 
 ```bash
---------------------------------------------------------
-Zabbix 7.0 installation completed!
-You can now access Zabbix frontend via your web browser:
-http://<server_ip_address>/
+========================================================
 
-Zabbix database user (zabbix) password: <strong_password>
+You can now access the Zabbix frontend via your web browser:
+  http://<ip_address>/
+
+Zabbix database connection
+  Username: Admin
+  password: <strong_password>
+
 Default Zabbix frontend login credentials:
   Username: Admin
   Password: zabbix
 
-Please change the default passwords after first login.
---------------------------------------------------------
+Please change the default passwords after the first login.
+
+========================================================
 ```
 
 ### ตั้งค่า Zabbix ครั้งแรก
