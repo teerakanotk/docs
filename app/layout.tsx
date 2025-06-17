@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 
 import { Footer, Layout, Navbar } from "nextra-theme-docs";
 import { Head } from "nextra/components";
@@ -52,6 +53,7 @@ export default async function RootLayout({
         >
           {children}
         </Layout>
+        <Analytics />
       </body>
     </html>
   );
