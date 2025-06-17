@@ -3,4 +3,131 @@ title: Nginx Proxy Manager
 asIndexPage: true
 ---
 
+import { Steps } from 'nextra/components'
+
 # Nginx Proxy Manger
+
+**Nginx Proxy Manager (NPM)** คือเครื่องมือที่ช่วยให้การจัดการ **Reverse Proxy** และ **SSL Certificate** เป็นเรื่องง่ายผ่าน **หน้าเว็บ (GUI)** ไม่จำเป็นต้องใช้คำสั่ง Nginx ที่ซับซ้อน ทำให้ผู้ใช้ทุกระดับสามารถตั้งค่าและจัดการบริการเว็บได้สะดวก
+
+### Features
+
+- **GUI ใช้งานง่าย:** ตั้งค่า Proxy และ SSL ได้โดยไม่ต้องเขียนโค้ด
+- **Reverse Proxy:** เชื่อมโยงโดเมนกับบริการภายในเครือข่ายได้อย่างรวดเร็ว
+- **SSL ฟรี (Let's Encrypt):** ขอและต่ออายุ SSL Certificate อัตโนมัติ เพื่อความปลอดภัยด้วย HTTPS
+- **Access Lists:** กำหนดสิทธิ์การเข้าถึง IP หรือตั้งรหัสผ่านป้องกัน
+- **Redirect Hosts:** ตั้งค่าการเปลี่ยนเส้นทางโดเมนง่ายๆ
+- **รองรับ Docker:** ติดตั้งและดูแลรักษาง่ายในรูปแบบ Container
+- **การตั้งค่าขั้นสูง:** เพิ่มคำสั่ง Nginx กำหนดเองได้สำหรับผู้ใช้ขั้นสูง
+
+## เตรียมความพร้อมก่อนการติดตั้ง
+
+- **Processor:** 1 Core
+- **Memory:** 1 GB
+- **Storage:** 20 GB
+- **Operating system:** Linux Ubuntu 22.04 (Jammy) LTS
+- **IP Address:** Static
+
+## ขั้นตอนการติดตั้ง Nginx Proxy Manager
+
+<Steps>
+
+### อัปเดตระบบ
+
+```bash
+sudo apt update && sudo apt upgrade -y
+```
+
+### ติดตั้ง Docker และ Docker compose
+
+```bash
+sudo apt install y docker.io docker-compose
+```
+
+### เตรียมไฟล์ docker-compose.yml
+
+- สร้างโฟลเดอร์ `npm` เพื่อเก็บไฟล์ docker-compose.yml
+
+```bash
+mkdir -p npm && cd npm
+sudo nano docker-compose.yml
+```
+
+- แก้ไขไฟล์ docker-compose.yml ด้วย `nano` หรือ `vim`
+
+```bash
+sudo nano docker-compose.yml
+```
+
+- เมื่อไฟล์ `docker-compose.yml` เปิดขึ้น ให้คัดลอกและวางเนื้อหาต่อไปนี้ลงไป
+
+```yml
+services:
+  app:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+```
+
+![npm-install-1](/server/npm/npm-install-1.png)
+
+- บันทึกและปิดไฟล์ โดยกด `Ctrl+X` แล้ว `Y` จากนั้น `Enter` (สำหรับ `nano`)
+
+### เริ่มการติดตั้ง
+
+- เมื่ออยู่ในไดเรกทอรี `npm` ให้รันคำสั่งต่อไปนี้เพื่อดาวน์โหลดอิมเมจ Docker และเริ่มต้น Nginx Proxy Manager
+
+```bash
+sudo docker-compose up -d
+```
+
+ขั้นตอนนี้จะดาวน์โหลดอิมเมจที่จำเป็นและรันคอนเทนเนอร์ในพื้นหลัง (detached mode)
+
+- รอจนกว่าการติดตั้งจะเสร็จสมบูรณ์และได้ผลลัพธ์ดังนี้
+
+```bash
+Status: Downloaded newer image for jc21/nginx-proxy-manager:latest
+Creating npm_app_1 ... done
+```
+
+</Steps>
+
+## การตั้งค่าเบื้องต้นเมื่อล็อกอินเข้าใช้งานครั้งแรก
+
+<Steps>
+
+### เข้าสู่หน้าเว็บจัดการ
+
+```
+http://<ip_address>:81
+```
+
+แทนที่ `<ip_address>` ด้วยที่อยู่ไอพีของเซิร์ฟเวอร์คุณ
+
+![npm-install-2](/server/npm/npm-install-2.png)
+
+ข้อมูลสำหรับการเข้าสู่ระบบครั้งแรกคือ:
+
+- Email address: `admin@example.com`
+- Password: `changeme`
+
+### หลังจากล็อกอินครั้งแรก ระบบจะบังคับให้เปลี่ยนอีเมลและรหัสผ่านเพื่อความปลอดภัย
+
+- เปลี่ยน Email ที่ใช้ในการล็อกอินเป็น `admin@yourdomain.tld` (แทนที่ `yourdomain.tld` ด้วยโดเมนจริงของคุณ) แล้วคลิกปุ่ม Save เพื่อดำเนินการต่อ
+
+![npm-install-3](/server/npm/npm-install-3.png)
+
+- เปลี่ยน Password ที่ใช้ในการล็อกอินเป็นรหัสผ่านใหม่ที่คาดเดายาก แล้วคลิกปุ่ม Save เพื่อบันทึกข้อมูล
+
+![npm-install-4](/server/npm/npm-install-4.png)
+
+### เสร็จสิ้นขั้นตอนการตั้งค่าเบื้องต้น
+
+![npm-install-5](/server/npm/npm-install-5.png)
+
+</Steps>
