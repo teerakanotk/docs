@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # Zabbix server
-# Author: Teerakan + Gemini
 # Date: 2025-06-18
 # Zabbix Version: 7.0 LTS
 # Database: PostgreSQL 17
