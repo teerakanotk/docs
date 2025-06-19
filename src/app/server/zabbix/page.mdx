@@ -1,0 +1,119 @@
+---
+title: Zabbix
+asIndexPage: true
+---
+
+import { Steps } from 'nextra/components'
+
+# Zabbix
+
+**Zabbix (แซบบิกซ์)** คือ ซอฟต์แวร์โอเพนซอร์สสำหรับมอนิเตอร์และติดตามประสิทธิภาพระบบ IT แบบครบวงจร ไม่ว่าจะเป็นเซิร์ฟเวอร์, เครือข่าย, แอปพลิเคชัน หรือฐานข้อมูล
+
+## ขั้นตอนการติดตั้ง Zabbix
+
+<Steps>
+
+### ใช้คำสั่ง curl เพื่อรันสคริปต์ติดตั้ง Zabbix อัตโนมัติ
+
+```bash
+sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/teerakanotk/ctsurin-docs/main/script/zabbix/install.sh)"
+```
+
+Output:
+
+```bash
+========================================================
+Starting Zabbix 7.0 LTS installation"
+Detailed installation: $LOG_FILE"
+========================================================
+
+- Update and install package requirement...
+```
+
+### รอจนกว่ากระบวนการติดตั้งจะเสร็จสมบูรณ์และแสดงผลลัพธ์ดังนี้
+
+```bash
+========================================================
+- Access the Zabbix frontend via your web browser
+http://<ip_address>/
+
+- Zabbix database connection credentials
+Username: zabbix
+password: <strong_password>
+
+- Default Zabbix frontend login credentials
+Username: Admin
+Password: zabbix
+
+Please change the default passwords after the first login.
+========================================================
+```
+
+</Steps>
+
+## การกำหนดค่า Zabbix ครั้งแรก
+
+<Steps>
+
+### เปิดเว็บเบราว์เซอร์ แล้วพิมพ์ URL ที่แสดงบนหน้า console
+
+```bash
+http://<ip_address>
+```
+
+### Welcome
+
+คลิก **Next step**
+
+![zabbix-install-1](/image/zabbix/zabbix-install-1.png)
+
+### Check of pre-requisites
+
+ตรวจสอบให้แน่ใจว่า Module ทุกตัวมีสถานะเป็น OK เมื่อยืนยันแล้ว สามารถคลิกที่ **Next step** ได้เลย
+
+![zabbix-install-2](/image/zabbix/zabbix-install-2.png)
+
+### Configure DB connection
+
+คัดลอกรหัสผ่านที่แสดงบน **Console** และวางลงในช่อง **Password** แล้วคลิก **Next step**
+
+![zabbix-install-3](/image/zabbix/zabbix-install-3.png)
+
+### Settings
+
+- **Zabbix server name:** ระบุ hostname ที่ต้องการ (ไม่บังคับ)
+
+- **Default time zone:** เลือก Time zone (ไม่บังคับ)
+
+- **Default theme:** เลือกธีมที่ต้องการ (ไม่บังคับ)
+
+- เมื่อตั้งค่าเรียบร้อยแล้ว ให้คลิก **Next step**
+
+![zabbix-install-4](/image/zabbix/zabbix-install-4.png)
+
+### Pre-installation summary
+
+กรุณาตรวจสอบข้อมูลทั้งหมดให้ถูกต้องก่อนเริ่มการติดตั้ง จากนั้นคลิก **Next step**
+
+![zabbix-install-5](/image/zabbix/zabbix-install-5.png)
+
+### Install
+
+เมื่อผลลัพธ์ปรากฏดังภาพ คลิก **Finish** เพื่อเข้าสู่หน้าล็อกอิน
+
+![zabbix-install-6](/image/zabbix/zabbix-install-6.png)
+
+### ล็อกอินเข้าสู่ระบบ
+
+- Username: **Admin**
+- Password: **zabbix**
+
+**สำคัญ:** อย่าลืมเปลี่ยนรหัสผ่านทันทีหลังจากล็อกอินครั้งแรก
+
+![zabbix-install-7](/image/zabbix/zabbix-install-7.png)
+
+### Dashboard
+
+![zabbix-install-8](/image/zabbix/zabbix-install-8.png)
+
+</Steps>

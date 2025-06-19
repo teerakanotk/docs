@@ -1,0 +1,71 @@
+---
+title: "Repository"
+---
+
+import { Steps, Callout } from "nextra/components";
+
+# Proxmox VE Repository
+
+**Repository** หรือเรียกสั้นๆ ว่า **"Repo"** คือแหล่งเก็บรวบรวมไฟล์ ซอฟต์แวร์ แพ็คเกจ หรือโค้ดต่างๆ ที่มีการจัดระเบียบไว้อย่างเป็นระบบ เพื่อให้ผู้ใช้งานหรือระบบสามารถเข้าถึง ดาวน์โหลด และติดตั้งได้อย่างสะดวกสบาย ลองนึกภาพว่า Repository เป็นเหมือนกับห้องสมุดขนาดใหญ่ที่เก็บ "หนังสือ" (แพ็คเกจซอฟต์แวร์) จำนวนมากไว้ แต่ละ "หนังสือ" มีชื่อเรียกเฉพาะ เวอร์ชันที่ชัดเจน และถูกจัดหมวดหมู่ไว้อย่างดี เมื่อคุณต้องการ "หนังสือ" เล่มไหน คุณก็แค่ไปที่ห้องสมุดแล้วหยิบออกมาได้เลย
+
+## การตั้งค่า No-Subscription Repository ใน Proxmox VE
+
+สำหรับผู้ใช้ที่ต้องการอัปเดต Proxmox VE โดยไม่ต้องใช้ Enterprise Repository ที่ต้องมี Subscription สามารถทำได้ตามขั้นตอนง่ายๆ ดังนี้
+
+<Steps>
+
+### ปิดใช้งาน Enterprise Repository
+
+- เข้าสู่หน้า Web UI ของ Proxmox VE
+
+```txt copy
+http://<ip_address>:8006
+```
+
+> แทนที่ `<ip_address>` ด้วยที่อยู่ IP ของ Proxmox VE ของคุณ
+
+- ที่แถบนำทางด้านซ้ายมือ ให้เลือก **node** ที่ต้องการอัปเดต (เช่น `pve1`)
+
+- ไปที่เมนู **Updates** > **Repositories**
+
+- เลือกบรรทัดของ **pve-enterprise** repository แล้วคลิกปุ่ม **Disable**
+
+![proxmox-repository-1](/image/proxmox/proxmox-repository-1.png)
+
+### เพิ่ม No-Subscription Repository
+
+- คลิก **Add** ที่อยู่บริเวณส่วนของ **APT Repositories**
+
+![proxmox-repository-2](/image/proxmox/proxmox-repository-2.png)
+
+- ในหน้าต่างที่ปรากฏขึ้น ให้เลือก **No-Subscription** แล้วคลิกปุ่ม **Add**
+
+![proxmox-repository-3](/image/proxmox/proxmox-repository-3.png)
+
+### อัปเดตแพ็คเกจ
+
+- ไปที่เมนู **Updates**
+
+- คลิกปุ่ม **Refresh**
+
+![proxmox-repository-4](/image/proxmox/proxmox-repository-4.png)
+
+- รอจนกระทั่งกระบวนการเสร็จสมบูรณ์และแสดงข้อความ **Task OK**
+
+![proxmox-repository-5](/image/proxmox/proxmox-repository-5.png)
+
+- กดปุ่ม **Esc** เพื่อปิดหน้าต่างแสดงผล
+
+### อัปเกรดแพ็คเกจ
+
+- คลิกปุ่ม **Upgrade**
+
+![proxmox-repository-6](/image/proxmox/proxmox-repository-6.png)
+
+- จะมีหน้าต่างป๊อปอัพเด้งขึ้นมา แสดงรายการแพ็คเกจที่ได้รับการอัปเดต จากนั้นกดปุ่ม **Y** แล้วกดปุ่ม **Enter** เพื่อยืนยันการอัปเกรด
+
+![proxmox-repository-7](/image/proxmox/proxmox-repository-7.png)
+
+- รอจนกว่ากระบวนการอัปเกรดจะเสร็จสมบูรณ์
+
+</Steps>

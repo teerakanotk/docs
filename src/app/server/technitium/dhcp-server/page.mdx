@@ -1,0 +1,111 @@
+---
+title: DHCP Server
+---
+
+import { Steps } from "nextra/components";
+
+# DHCP Server
+
+DHCP Server คือ เซิร์ฟเวอร์ที่ทำหน้าที่แจกจ่าย IP Address และข้อมูลการตั้งค่าเครือข่ายที่จำเป็นอื่นๆ (เช่น Subnet Mask, Default Gateway, DNS Server) ให้กับอุปกรณ์ต่างๆ (คอมพิวเตอร์, มือถือ, แท็บเล็ต ฯลฯ) ที่เชื่อมต่อเข้ากับเครือข่ายโดยอัตโนมัติ
+
+## หลักการทำงาน
+
+- **อุปกรณ์ร้องขอ (Discover):** เมื่ออุปกรณ์เชื่อมต่อเครือข่าย จะส่งสัญญาณขอ IP Address
+- **เซิร์ฟเวอร์เสนอ (Offer):** DHCP Server ที่อยู่บนเครือข่ายจะเสนอ IP Address ที่ว่างอยู่ให้
+- **อุปกรณ์ยืนยัน (Request):** อุปกรณ์จะเลือก IP ที่ได้รับและยืนยันกลับไป
+- **เซิร์ฟเวอร์อนุมัติ (Acknowledge):** DHCP Server จะอนุมัติ IP Address นั้นให้กับอุปกรณ์อย่างเป็นทางการ
+
+## ขั้นตอนการตั้งค่า DHCP Server บน Technitium
+
+<Steps>
+
+### เข้าสู่หน้าเว็บจัดการ
+
+```
+http://<ip_address>:5380
+```
+
+### ไปที่เมนู DHCP > Scopes
+
+![technitium-dhcp-1](/image/technitium/technitium-dhcp-1.png)
+
+### สร้าง DHCP Scopes
+
+- คลิกปุ่ม `Add Scopes`
+
+- กรอกข้อมูลที่จำเป็นดังต่อไปนี้:
+  - **Name:** ตั้งชื่อสำหรับ DHCP Scope นี้ (เช่น `vlan10`)
+  - **Starting Address:** IP Address ตัวแรกใน Pool ที่จะเริ่มแจกจ่าย (เช่น `10.11.10.3`)
+  - **Ending Address:** IP Address ตัวสุดท้ายใน Pool ที่แจกจ่าย (เช่น `10.11.10.254`)
+  - **Subnet Mask:** ระบุ Subnet Mask ของเครือข่าย (เช่น `255.255.255.0`)
+  - **Lease Time (Optional):** กำหนดระยะเวลาเช่า IP Address
+
+  ![technitium-dhcp-2](/image/technitium/technitium-dhcp-2.png)
+
+  - **Ping Check:** ติ๊กถูก `Enable Ping Check` (เพื่อป้องกันการชนกันของ IP)
+
+  ![technitium-dhcp-3](/image/technitium/technitium-dhcp-3.png)
+
+  - **Domain Name (Optional):** ระบุชื่อโดเมน (เช่น `ctsurin.local`)
+
+  ![technitium-dhcp-4](/image/technitium/technitium-dhcp-4.png)
+
+  - **Router Address:** ระบุ Default Gateway ของเครือข่าย (เช่น `10.11.10.1`)
+  - **DNS Servers:**
+
+    - ยกเลิกเครื่องหมายติ๊กถูก `Use This DNS Server`
+    - ระบุ IP Address ของ DNS Server
+
+  ![technitium-dhcp-5](/image/technitium/technitium-dhcp-5.png)
+
+- คลิกปุ่ม `Save`
+
+### กำหนดค่า Network Switch ให้ทำ DHCP Relay มายังเซิร์ฟเวอร์
+
+**ตัวอย่าง:** Huawei Switch S5731-H
+
+```
+<SW> system-view
+[SW] interface vlanif <1-4094>
+[SW] ip address <ip_address> <subnet_mask>
+[SW] dhcp select relay
+[SW] dhcp relay server-ip <dhcp_server_address>
+```
+
+```
+#
+ interface Vlanif10
+ ip address 10.11.10.2 255.255.255.0
+ dhcp select relay
+ dhcp relay server-ip 10.11.254.150
+#
+```
+
+</Steps>
+
+## ทดสอบ
+
+### สำหรับ Windows
+
+<Steps>
+
+#### เปิด Command Prompt และพิมพ์คำสั่ง
+
+```cmd
+ipconfig /renew
+```
+
+> คำสั่ง `ipconfig /renew` ใช้สำหรับร้องขอ IP ชุดใหม่จาก DHCP Server
+
+#### ผลลัพธ์ที่ควรได้
+
+```
+Network adapter:
+ Connection-specific DNS Suffix: ctsurin.local
+ Link-local IPv6 Address.......: <ipv6>
+ IPv4 Address..................: 10.11.10.10
+ Subnet Mask...................: 255.255.255.0
+ Default Gateway...............: 10.11.10.1
+```
+
+</Steps>
